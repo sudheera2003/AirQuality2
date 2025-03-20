@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 100px 160px;
+}
+.top-section h1{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+    margin: 6px 0px 10px;
+    font-size: 38px;
+}
+.flex-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px !important;
+    margin: 0;
+    height: 100%;
+}
+.contact-container {
+    display: flex;
+    width: 100%;
+    background: white;
+    overflow: hidden;
+    gap: 30px;
+}
+.contact-info {
+    width: 45%;
+    background: black;
+    color: white;
+    padding: 40px;
+    height: 650px;
+}
+.contact-info h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 500;
+}
+.sub-text {
+    font-size: 18px;
+    margin:10px 0px 80px;
+    color: #C9C9C9;
+}
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.contact-form {
+    width: 65%;
+    padding: 30px;
+}
+.info-item i{
+    margin-right: 20px;
+}
+.info-item p{
+    margin: 5px 0px;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.form-group {
+    display: flex;
+    gap: 45px;
+    margin-bottom: 15px;
+
+}
+.form-group div {
+    flex: 1;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 600;
+}
+input, textarea {
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-bottom: 1px solid #bbb;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+}
+input:focus, textarea:focus {
+    border-bottom: 1px solid black;
+}
+.subject-group {
+    margin: 45px 0;
+}
+.radio-group {
+    display: flex;
+    gap: 50px;
+    margin-top: 15px; 
+}
+.radio-group input{
+    margin: 0px;
+}
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.message-group textarea {
+    height: 80px;
+    resize: none;
+}
+.send-btn {
+    background: black;
+    color: white;
+    padding: 17px 40px;
+    border: solid 1px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 18px;
+    margin-top: 50px;
+    display: block;
+    margin-left: auto;
+    transition: all 0.3s;
+}
+.send-btn:hover {
+    border-color: black;
+    background-color: white;
+    color: black;
+}
+input[type="radio"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid black;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
