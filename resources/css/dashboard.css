@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,6 +6,9 @@
 }
 body {
     font-family: "Poppins", sans-serif;
+    
+}
+.dashboard-container{
     margin: 100px 160px;
 }
 .txt-1{
@@ -62,3 +66,86 @@ body {
 .na {
     background-color: #E22020; 
 }
+.bottom-section{
+    margin-top: 60px;
+}
+
+
+/* Container */
+.sensor-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+/* Forms */
+.sensor-form, .sensor-delete {
+    background: none;
+    padding: 20px;
+    width: 45%;
+}
+
+/* Titles */
+.sensor-form h2, .sensor-delete h2{
+    font-family: "Oswald", sans-serif;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 29px;
+    color: #575555;
+}
+
+/* Labels & Input Fields in Shadowed Box */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: white;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow around label + input */
+    margin-bottom: 15px;
+    border: solid 0.5px #F3F3F3;
+}
+
+.input-group label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #424242;
+}
+
+/* Inputs */
+input, select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    background: transparent;
+}
+
+/* Form Row - Side by Side Inputs */
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.add-btn, .delete-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+    margin-top: 15px;
+    background: #1C1C1C;
+    color: white;
+}
+
+.add-btn:hover, .delete-btn:hover {
+    background-color: rgb(44, 44, 44);
+    color: #ffffff;
+}
+

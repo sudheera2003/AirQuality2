@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-    <img src="{{ Vite::asset('resources/assets/images/Logo.svg') }}" alt="Logo">
+    <a href="{{ route('home') }}"><img src="{{ Vite::asset('resources/assets/images/Logo.svg') }}" alt="Logo"></a>
         
         <div class="search-container">
             <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -20,10 +20,11 @@
 
         <nav>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Historical Data</a></li>
-                <li><a href="#">About AQI</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="">Historical Data</a></li>
+                <li><a href="{{ route('about') }}">About AQI</a></li>
+                <li><a href="{{ route('contact') }}">Contact</a></li>
+                <li><a href="{{ route('dashboard') }}">Dashboard</a>
                 <li><a href="#">Login</a></li>
             </ul>
         </nav>
@@ -37,10 +38,10 @@
           <p>Copyright 2025 AQI Colombo<br>All rights reserved</p>
         </div>
         <div class="footer-center">
-          <a href="#">Home</a>
+          <a href="{{ route('home') }}">Home</a>
           <a href="#">Historical Data</a>
-          <a href="#">About AQI</a>
-          <a href="#">Contact</a>
+          <a href="{{ route('about') }}">About AQI</a>
+          <a href="{{ route('contact') }}">Contact</a>
         </div>
         <div class="footer-right">
           <p class="title">Contact Us</p>

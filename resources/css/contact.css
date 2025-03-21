@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +6,10 @@
 }
 body {
     font-family: "Poppins", sans-serif;
-    margin: 100px 160px;
+    
+}
+.top-section{
+    margin: 50px 160px 30px;
 }
 .top-section h1{
     font-family: "Oswald", sans-serif;
@@ -20,6 +24,7 @@ body {
     margin-top: 60px !important;
     margin: 0;
     height: 100%;
+    margin: 50px 160px 100px;
 }
 .contact-container {
     display: flex;
