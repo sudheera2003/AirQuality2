@@ -18,8 +18,7 @@ body {
 .col-blk{
     color: #4D4D4D;
 }
-
-.top-section h1 ,.title{
+.top-section h1 ,.S-title{
     font-family: "Oswald", sans-serif;
     font-weight: 400;
     margin: 6px 0px 10px;
@@ -37,7 +36,6 @@ body {
     font-family: "Poppins", sans-serif;
     margin: 50px 0px 30px;
 }
-
 .grid-item {
     display: flex;
     justify-content: space-between;
@@ -48,7 +46,6 @@ body {
     font-weight: 500;
     width: 180px; 
 }
-
 .status {
     padding: 6px 12px;
     border-radius: 4px;
@@ -58,7 +55,6 @@ body {
     text-align: center;
     min-width: 60px; 
 }
-
 .live {
     background-color: #74E220; 
 }
@@ -69,24 +65,17 @@ body {
 .bottom-section{
     margin-top: 60px;
 }
-
-
-/* Container */
 .sensor-container {
     display: flex;
     justify-content: space-between;
     gap: 40px;
     margin-top: 20px;
 }
-
-/* Forms */
 .sensor-form, .sensor-delete {
     background: none;
     padding: 20px;
     width: 45%;
 }
-
-/* Titles */
 .sensor-form h2, .sensor-delete h2{
     font-family: "Oswald", sans-serif;
     margin-bottom: 15px;
@@ -94,26 +83,21 @@ body {
     font-size: 29px;
     color: #575555;
 }
-
-/* Labels & Input Fields in Shadowed Box */
 .input-group {
     display: flex;
     flex-direction: column;
     padding: 10px;
     background: white;
-    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow around label + input */
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); 
     margin-bottom: 15px;
     border: solid 0.5px #F3F3F3;
 }
-
 .input-group label {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 5px;
     color: #424242;
 }
-
-/* Inputs */
 input, select {
     width: 100%;
     padding: 8px;
@@ -123,14 +107,13 @@ input, select {
     outline: none;
     background: transparent;
 }
-
-/* Form Row - Side by Side Inputs */
 .form-row {
     display: flex;
     gap: 10px;
 }
-
-/* Buttons */
+.form-row .input-group {
+    flex-grow: 1; 
+}
 .add-btn, .delete-btn {
     width: 100%;
     padding: 16px;
@@ -143,7 +126,6 @@ input, select {
     background: #1C1C1C;
     color: white;
 }
-
 .add-btn:hover, .delete-btn:hover {
     background-color: rgb(44, 44, 44);
     color: #ffffff;

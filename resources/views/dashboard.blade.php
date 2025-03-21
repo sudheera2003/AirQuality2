@@ -30,10 +30,9 @@
         </div>
         
         <div class="bottom-section">
-            <h1 class="title">Manage Sensors</h1>
+            <h1 class="S-title">Manage Sensors</h1>
 
             <div class="sensor-container">
-                <!-- Add Sensor Form -->
                 <div class="sensor-form">
                     <h2>Add Sensors</h2>
                     <div class="input-group">
@@ -69,8 +68,6 @@
                     </div>
                     <button class="add-btn">Add Sensor</button>
                 </div>
-
-                <!-- Delete Sensor Form -->
                 <div class="sensor-delete">
                     <h2>Delete Sensors</h2>
                     <div class="input-group">
