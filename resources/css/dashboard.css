@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,6 +6,9 @@
 }
 body {
     font-family: "Poppins", sans-serif;
+    
+}
+.dashboard-container{
     margin: 100px 160px;
 }
 .txt-1{
@@ -14,8 +18,7 @@ body {
 .col-blk{
     color: #4D4D4D;
 }
-
-.top-section h1 ,.title{
+.top-section h1 ,.S-title{
     font-family: "Oswald", sans-serif;
     font-weight: 400;
     margin: 6px 0px 10px;
@@ -27,13 +30,12 @@ body {
 }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 350px); /* Fixed width of 200px per column */
+    grid-template-columns: repeat(3, 350px); 
     column-gap: 5px;
     row-gap: 12px;
     font-family: "Poppins", sans-serif;
     margin: 50px 0px 30px;
 }
-
 .grid-item {
     display: flex;
     justify-content: space-between;
@@ -44,7 +46,6 @@ body {
     font-weight: 500;
     width: 180px; 
 }
-
 .status {
     padding: 6px 12px;
     border-radius: 4px;
@@ -54,7 +55,6 @@ body {
     text-align: center;
     min-width: 60px; 
 }
-
 .live {
     background-color: #74E220; 
 }
@@ -62,3 +62,72 @@ body {
 .na {
     background-color: #E22020; 
 }
+.bottom-section{
+    margin-top: 60px;
+}
+.sensor-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 20px;
+}
+.sensor-form, .sensor-delete {
+    background: none;
+    padding: 20px;
+    width: 45%;
+}
+.sensor-form h2, .sensor-delete h2{
+    font-family: "Oswald", sans-serif;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 29px;
+    color: #575555;
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: white;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 15px;
+    border: solid 0.5px #F3F3F3;
+}
+.input-group label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #424242;
+}
+input, select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    background: transparent;
+}
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+.form-row .input-group {
+    flex-grow: 1; 
+}
+.add-btn, .delete-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+    margin-top: 15px;
+    background: #1C1C1C;
+    color: white;
+}
+.add-btn:hover, .delete-btn:hover {
+    background-color: rgb(44, 44, 44);
+    color: #ffffff;
+}
+
