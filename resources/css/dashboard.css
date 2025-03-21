@@ -30,7 +30,7 @@ body {
 }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 350px); /* Fixed width of 200px per column */
+    grid-template-columns: repeat(3, 350px); 
     column-gap: 5px;
     row-gap: 12px;
     font-family: "Poppins", sans-serif;

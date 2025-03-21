@@ -25,7 +25,7 @@
                 <li><a href="{{ route('about') }}">About AQI</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
                 <li><a href="{{ route('dashboard') }}">Dashboard</a>
-                <li><a href="#">Login</a></li>
+                <li><a href="{{ route('login') }}">Login</a></li>
             </ul>
         </nav>
     </header>
