@@ -27,11 +27,11 @@
         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
         <li><a href="{{ route('index.login') }}">Login</a></li>
     </ul>
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button class="logout-btn">Logout</button>
-    </form>
-</nav>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="logout-btn">Logout</button>
+        </form>
+    </nav>
     </header>
 
         {{$slot}}
