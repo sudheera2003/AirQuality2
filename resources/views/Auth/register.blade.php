@@ -17,22 +17,21 @@
                     @csrf
                     <div class="input-box">
                         <i class="fa-solid fa-envelope"></i>
-                        <input type="email" name='email' placeholder="Enter your email" value='{{ old('email') }}'
-                            required>
+                        <input type="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required>
                     </div>
                     <div class="input-box">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" name='name' placeholder="Enter your name" value='{{ old('name') }}'
-                            required>
+                        <input type="text" name="name" placeholder="Enter your name" value="{{ old('name') }}" required>
                     </div>
                     <div class="input-box">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" name='password' placeholder="Enter your password" required>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fa-solid fa-eye" id="togglePassword"></i>
                     </div>
                     <div class="input-box">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" name='password_confirmation' placeholder="Confirm your password"
-                            required>
+                        <input type="password" id="confirmPassword" name="password_confirmation" placeholder="Confirm your password" required>
+                        <i class="fa-solid fa-eye" id="toggleConfirmPassword"></i>
                     </div>
                     <button class="Login-btn" type="submit">Register</button>
                 </form>
@@ -52,5 +51,28 @@
                 <a href="{{ route('home') }}"><span class="back-txt">Go back?</span></a>
             </div>
         </div>
+        <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
+        <script>
+            function togglePasswordVisibility(toggleId, inputId) {
+                const toggleIcon = document.getElementById(toggleId);
+                const passwordInput = document.getElementById(inputId);
+
+                toggleIcon.addEventListener("click", function () {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        toggleIcon.classList.remove("fa-eye");
+                        toggleIcon.classList.add("fa-eye-slash");
+                    } else {
+                        passwordInput.type = "password";
+                        toggleIcon.classList.remove("fa-eye-slash");
+                        toggleIcon.classList.add("fa-eye");
+                    }
+                });
+            }
+
+            togglePasswordVisibility("togglePassword", "password");
+            togglePasswordVisibility("toggleConfirmPassword", "confirmPassword");
+        </script>
     </body>
 </x-layout>

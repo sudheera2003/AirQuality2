@@ -93,3 +93,7 @@
     font-size: 12px;
     font-weight: 300;
 }
+.input-box i.fa-eye,
+.input-box i.fa-eye-slash {
+    cursor: pointer;
+}

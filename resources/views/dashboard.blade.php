@@ -8,7 +8,7 @@
 
     <body>
 
-        <span>Hello, {{ Auth::user()->name }}</span>
+        <span class="welcome-msg">Hello, {{ Auth::user()->name }}</span>
 
         <div class="dashboard-container">
             <div class="top-section">
@@ -90,7 +90,6 @@
         </div>
     </div>
 </div>
-
 
     </body>
 </x-layout>

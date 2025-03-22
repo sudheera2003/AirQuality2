@@ -9,7 +9,7 @@ body {
     
 }
 .dashboard-container{
-    margin: 100px 160px;
+    margin: 50px 160px 100px;
 }
 .txt-1{
     color: #8A8A8A;
@@ -143,3 +143,27 @@ input, select {
     background: #1C1C1C;
     color: white;
 }
+.welcome-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 50px;
+    opacity: 0; 
+    transform: scale(0.8);
+    animation: fadeInScale 1.5s ease-out forwards; 
+  }
+  
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
