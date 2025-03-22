@@ -40,9 +40,15 @@
             </div>
             @if ($errors->any())
                     <div class="error-box">
+
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
+
+                        <ul class='bg-red-100'>
+                            @foreach ($errors->all() as $error)
+                                <li class='my-2 text-red-500'>{{ $error }}</li>
+
                             @endforeach
                         </ul>
                     </div>
