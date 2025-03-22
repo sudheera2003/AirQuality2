@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NormalRoutes;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -13,26 +14,21 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class,'showLogin'])->name('index.login');
 Route::post('/login', [AuthController::class,'login'])->name('login');
 
-Route::get('/register', [AuthController::class,'showRegister'])->name('dashboard.register');
+
 Route::post('/register', [AuthController::class,'register'])->name('register');
 
 Route::post('/logout', [AuthController::class,'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::middleware('auth')->group(function (){
+    Route::get('/register', [AuthController::class,'showRegister'])->name('dashboard.register');
+    Route::get('/dashboard', [NormalRoutes::class,'dashboard'])->name('dashboard'); 
+});
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::get('/', [NormalRoutes::class,'home'])->name('home');
+Route::get('/about', [NormalRoutes::class,'about'])->name('about');
+Route::get('/contact', [NormalRoutes::class,'contact'])->name('contact');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
 
 
 
