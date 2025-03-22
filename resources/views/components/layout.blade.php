@@ -25,7 +25,11 @@
                 <li><a href="{{ route('about') }}">About AQI</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
                 <li><a href="{{ route('dashboard') }}">Dashboard</a>
-                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('index.login') }}">Login</a></li>
+                <form action="{{route('logout')}}" method="POST">
+                  @csrf
+                <button>LogOut</button>
+                </form>
             </ul>
         </nav>
     </header>

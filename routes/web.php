@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -8,6 +9,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/login', [AuthController::class,'showLogin'])->name('index.login');
+Route::post('/login', [AuthController::class,'login'])->name('login');
+
+Route::get('/register', [AuthController::class,'showRegister'])->name('dashboard.register');
+Route::post('/register', [AuthController::class,'register'])->name('register');
+
+Route::post('/logout', [AuthController::class,'logout'])->name('logout');
 
 Route::get('/', function () {
     return view('index');
@@ -25,10 +34,5 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
 
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+
