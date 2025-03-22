@@ -27,7 +27,7 @@
                         <button class="Login-btn" type="submit">Login</button>
                     </form>
             </div>
-        </div>
+        
 
             @if ($errors->any())
                 <div class="error-box">
