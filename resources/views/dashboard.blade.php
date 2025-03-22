@@ -82,7 +82,7 @@
         <h1 class="S-title">Manage Admins</h1>
         <div class="sensor-form">
             <h2>Create Admin</h2>
-            <a href="{{ route('register') }}"><button class="r-btn">Register Admin</button></a>
+            <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
             
                 <!-- <form class="admin-form" action="">
                     <div class="input-group-ad">
