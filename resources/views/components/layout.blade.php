@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,11 @@
     @vite('resources/css/Header.css')
     @vite('resources/css/footer.css')
 </head>
+
 <body>
     <header>
-    <a href="{{ route('home') }}"><img src="{{ Vite::asset('resources/assets/images/Logo.svg') }}" alt="Logo"></a>
-        
+        <a href="{{ route('home') }}"><img src="{{ Vite::asset('resources/assets/images/Logo.svg') }}" alt="Logo"></a>
+
         <div class="search-container">
             <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             <input type="text" class="search-input" placeholder="Search here">
@@ -24,34 +26,42 @@
                 <li><a href="">Historical Data</a></li>
                 <li><a href="{{ route('about') }}">About AQI</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
-                <li><a href="{{ route('dashboard') }}">Dashboard</a>
-                <li><a href="{{ route('index.login') }}">Login</a></li>
-                <form action="{{route('logout')}}" method="POST">
-                  @csrf
-                <button>LogOut</button>
-                </form>
+                @auth
+                    <!-- If user is logged in, show Dashboard and Logout -->
+                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                @else
+                    <li><a href="{{ route('index.login') }}">Login</a></li>
+                @endauth
             </ul>
         </nav>
     </header>
 
-        {{$slot}}
+    {{ $slot }}
 
     <footer>
         <div class="footer-left">
-        <img src="{{ Vite::asset('resources/assets/images/Logo - white.svg') }}" alt="Logo">
-          <p>Copyright 2025 AQI Colombo<br>All rights reserved</p>
+            <img src="{{ Vite::asset('resources/assets/images/Logo - white.svg') }}" alt="Logo">
+            <p>Copyright 2025 AQI Colombo<br>All rights reserved</p>
         </div>
         <div class="footer-center">
-          <a href="{{ route('home') }}">Home</a>
-          <a href="#">Historical Data</a>
-          <a href="{{ route('about') }}">About AQI</a>
-          <a href="{{ route('contact') }}">Contact</a>
+            <a href="{{ route('home') }}">Home</a>
+            <a href="#">Historical Data</a>
+            <a href="{{ route('about') }}">About AQI</a>
+            <a href="{{ route('contact') }}">Contact</a>
         </div>
         <div class="footer-right">
-          <p class="title">Contact Us</p>
-          <p>Call Us: <span>031 45 235 95</span><p>
-          <p>Email Us: <span>ColomboAQI@gmail.com</span></p>
+            <p class="title">Contact Us</p>
+            <p>Call Us: <span>031 45 235 95</span>
+            <p>
+            <p>Email Us: <span>ColomboAQI@gmail.com</span></p>
         </div>
-      </footer>
+    </footer>
 </body>
+
 </html>

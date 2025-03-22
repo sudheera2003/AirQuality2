@@ -21,6 +21,11 @@
                             required>
                     </div>
                     <div class="input-box">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" name='name' placeholder="Enter your email" value='{{ old('name') }}'
+                            required>
+                    </div>
+                    <div class="input-box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" name='password' placeholder="Enter your password" required>
                     </div>
@@ -34,11 +39,13 @@
 
             </div>
             @if ($errors->any())
-                    <ul class='bg-red-100'>
-                        @foreach ($errors->all() as $error)
-                            <li class='my-2 text-red-500'>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <div class="error-box">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
             <div class="extra-links">
