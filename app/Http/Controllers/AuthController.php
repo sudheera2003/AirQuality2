@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -13,8 +14,22 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
-    public function login(){
-        
+    public function login(Request $request){
+        $validate = $request->validate(
+            [
+                'email'=>'required|email',
+                'password'=>'required|string',
+            ]
+        );
+
+        if(Auth::attempt($validate)){
+            $request->session()->regenerate();
+            return redirect()->route('home');
+        }
+
+        throw ValidationException::withMessages([
+            'creadentials' => 'Sorry, incorrect credentials'
+        ]);
     }
     public function showRegister(){
         return view('Auth.register');
@@ -28,15 +43,16 @@ class AuthController extends Controller
                 'password'=> 'required|string|min:8|confirmed',
             ]
         );
-        $user = User::create($validate);
-
-        Auth::login($user);
+        User::create($validate);
 
         return redirect()->route('dashboard');
     }
 
-    public function logout(){
+    public function logout(Request $request){
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 }
