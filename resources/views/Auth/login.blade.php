@@ -10,10 +10,11 @@
             <div class="login-box">
                 <h1>Admin Login</h1>
                 <p>Only authorized administrators can log in. If you do not have access, please contact support.</p>
-                <form>
+                <form action='{{route('login')}}' method='POST'>
+                @csrf
                     <div class="input-box">
                         <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Enter your email" required>
+                        <input type="email" placeholder="Enter your email" value='{{old('email')}}' required>
                     </div>
                     <div class="input-box">
                         <i class="fa-solid fa-lock"></i>
