@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         if(Auth::attempt($validate)){
             $request->session()->regenerate();
-            return redirect()->route('home');
+            return redirect()->route('dashboard');
         }
 
         throw ValidationException::withMessages([
@@ -53,6 +53,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

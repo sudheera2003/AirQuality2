@@ -27,7 +27,6 @@
                 <li><a href="{{ route('about') }}">About AQI</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
                 @auth
-                    <!-- If user is logged in, show Dashboard and Logout -->
                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
@@ -40,23 +39,8 @@
                 @endauth
             </ul>
         </nav>
-
-        <nav class="nav-container">
-    <ul class="nav-links">
-        <li><a href="{{ route('home') }}">Home</a></li>
-        <li><a href="#">Historical Data</a></li>
-        <li><a href="{{ route('about') }}">About AQI</a></li>
-        <li><a href="{{ route('contact') }}">Contact</a></li>
-        <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ route('index.login') }}">Login</a></li>
-    </ul>
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button class="logout-btn">Logout</button>
-    </form>
-</nav>
     </header>
-
+    
     {{ $slot }}
 
     <footer>

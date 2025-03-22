@@ -13,8 +13,8 @@
             <div class="login-box">
                 <h1>Admin Register</h1>
                 <p>Only authorized administrators can register. If you do not have access, please contact support.</p>
-                <form action="{{route('register')}}" method="POST">
-                @csrf
+                <form action="{{ route('register') }}" method="POST">
+                    @csrf
                     <div class="input-box">
                         <i class="fa-solid fa-envelope"></i>
                         <input type="email" name='email' placeholder="Enter your email" value='{{ old('email') }}'
@@ -22,7 +22,7 @@
                     </div>
                     <div class="input-box">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" name='name' placeholder="Enter your email" value='{{ old('name') }}'
+                        <input type="text" name='name' placeholder="Enter your name" value='{{ old('name') }}'
                             required>
                     </div>
                     <div class="input-box">
@@ -39,20 +39,14 @@
 
             </div>
             @if ($errors->any())
-                    <div class="error-box">
-
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-
-                        <ul class='bg-red-100'>
-                            @foreach ($errors->all() as $error)
-                                <li class='my-2 text-red-500'>{{ $error }}</li>
-
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <div class="error-box">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div class="extra-links">
                 <a href="{{ route('home') }}"><span class="back-txt">Go back?</span></a>
