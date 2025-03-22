@@ -24,6 +24,7 @@
                 </form>
             </div>
 
+
             <div class="extra-links">
                 <a href="">Forgot your password? <span class="reset-txt">Reset Password</span></a><br><br>
                 <a href="{{ route('home') }}"><span class="back-txt">Go back?</span></a>
