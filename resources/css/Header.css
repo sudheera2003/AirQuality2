@@ -8,23 +8,27 @@ body {
 }
 header {
     display: flex;
-    text-align: center;
     align-items: center;
+    justify-content: space-between;
     padding: 15px 10%;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
-    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.Logo {
-    cursor: pointer;
-    margin-right: auto;
-    width: 200px; 
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 .nav-links {
     list-style: none;
     display: flex;
     gap: 40px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap; 
 }
 .nav-links li {
     display: inline-block;
@@ -88,8 +92,7 @@ header {
     outline: none;
     font-size: 14px;
     width: 100%;
-    padding: 5px;
-    
+    padding: 5px;  
 }
 .search-input::placeholder {
     font-style: italic;
@@ -97,3 +100,20 @@ header {
     font-size: 16px;
     font-style: italic;
 }
+.logout-btn {
+    padding: 8px 25px;
+    background-color: white;
+    border: solid 1px #1f1e1e;
+    border-radius: 50px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-left: 5px;
+}
+
+.logout-btn:hover {
+    background-color: #1f1e1e; 
+    color: white; 
+    border-color: #fff;
+}
+
