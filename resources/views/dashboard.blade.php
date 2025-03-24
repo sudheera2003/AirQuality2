@@ -1,95 +1,108 @@
 <x-layout>
     @vite('resources/css/dashboard.css')
     <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <head>
         <title>Air Quality - Admin Dashboard</title>
+        @vite('resources/js/global.js')
     </head>
 
     <body>
-
         <span class="welcome-msg">Hello, {{ Auth::user()->name }}</span>
+
+        @if (session('success'))
+            <div class="">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="">
+                {{ session('error') }}
+            </div>
+        @endif
+         <script>
+        // Pass PHP data into JavaScript by assigning it to a global variable
+        window.sensorIds = @json($sensors->pluck('id'));
+    </script>
+
 
         <div class="dashboard-container">
             <div class="top-section">
-                <p class="txt-1">Sri lanka / <span class="col-blk">Colombo</span></p>
+                <p class="txt-1">Sri Lanka / <span class="col-blk">Colombo</span></p>
                 <h1>Live Sensors</h1>
-                <p class="txt-2">Air quality index (AQI) in Colombo 09:42, Mar 14</p>
+                <p class="txt-2">Air quality index (AQI) in Colombo <span id="time"></span></p>
             </div>
-            <div class="grid-container">
-                <div class="grid-item">Colombo 1 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 2 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 3 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 4 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 5 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 6 <span class="status na">N/A</span></div>
-                <div class="grid-item">Colombo 7 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 8 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 9 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 10 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 11 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 12 <span class="status na">N/A</span></div>
-                <div class="grid-item">Colombo 13 <span class="status live">Live</span></div>
-                <div class="grid-item">Colombo 14 <span class="status live">Live</span></div>
+
+            <div class="grid-container" id="sensor-list">
+                @foreach ($sensors as $sensor)
+                    <div class="grid-item">{{ $sensor->name }} <span class="status live">Live</span> <span
+                            class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span></div>
+                @endforeach
             </div>
 
             <div class="bottom-section">
                 <h1 class="S-title">Manage Sensors</h1>
-
                 <div class="sensor-container">
                     <div class="sensor-form">
                         <h2>Add Sensors</h2>
-                        <div class="input-group">
-                            <label>Sensor Name</label>
-                            <input type="text">
-                        </div>
-                        <div class="form-row">
-                            <div class="input-group">
-                                <label>Sensor ID</label>
-                                <input type="text">
-                            </div>
-                            <div class="input-group">
-                                <label>Connection Type</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="input-group">
-                                <label>Longitude</label>
-                                <input type="text">
-                            </div>
-                            <div class="input-group">
-                                <label>Latitude</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Status</label>
-                            <select>
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                        <button class="add-btn">Add Sensor</button>
+                        <form method="POST" action="{{ route('sensor.store') }}">
+                            @csrf
+                            <label>Location Name</label>
+                            <input type="text" name="name" required>
+
+                            <label>Latitude</label>
+                            <input type="text" name="lat" required>
+
+                            <label>Longitude</label>
+                            <input type="text" name="lng" required>
+
+                            <button type="submit" class="delete-btn">Add Location</button>
+                        </form>
                     </div>
                     <div class="sensor-delete">
                         <h2>Delete Sensors</h2>
-                        <div class="input-group">
+                        <form method="POST" action="/delete-location">
+                            @csrf
                             <label>Sensor ID</label>
-                            <input type="text">
-                        </div>
-                        <button class="delete-btn">Delete Sensor</button>
+                            <input type="text" name="id" required>
+                            <button type="submit" class="delete-btn">Delete Sensor</button>
+                        </form>
                     </div>
                 </div>
             </div>
-    <div class="admin-section">
-        <h1 class="S-title">Manage Admins</h1>
-        <div class="sensor-form">
-            <h2>Create Admin</h2>
-            <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
-        </div>
-    </div>
-</div>
 
+            <div class="admin-section">
+                <h1 class="S-title">Manage Admins</h1>
+                <div class="sensor-form">
+                    <h2>Create Admin</h2>
+                    <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Function to fetch updated AQI data and update the dashboard
+            function fetchAQI() {
+                fetch('/api/sensors/aqi') // API endpoint to get sensor AQI data
+                    .then(response => response.json())
+                    .then(data => {
+                        // Loop through the data and update AQI values
+                        data.forEach(sensor => {
+                            const aqiElement = document.getElementById('aqi-' + sensor.id);
+                            if (aqiElement) {
+                                aqiElement.textContent = sensor.aqi; // Update the AQI value
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error fetching AQI data:', error));
+            }
+
+            // Fetch AQI data
+            setInterval(fetchAQI, 2000);
+
+            // Fetch AQI data on page load as well
+            fetchAQI();
+        </script>
     </body>
 </x-layout>

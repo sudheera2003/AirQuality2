@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SensorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NormalRoutes;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,12 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class,'showLogin'])->name('index.login');
 Route::post('/login', [AuthController::class,'login'])->name('login');
+
+Route::post('/add-location', [SensorController::class, 'store'])->name('sensor.store');
+
+
+Route::get('/update-aqi/{sensorId}', [SensorController::class, 'updateAQI']);
+Route::get('/api/sensors/aqi', [SensorController::class, 'getAQI']);
 
 
 Route::post('/register', [AuthController::class,'register'])->name('register');
