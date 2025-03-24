@@ -26,8 +26,10 @@
                         </div>
                         <button class="Login-btn" type="submit">Login</button>
                     </form>
-            </div>
-             @if ($errors->any())
+            </div>    
+
+            @if ($errors->any())
+
                 <div class="error-box">
                     <ul>
                         @foreach ($errors->all() as $error)
