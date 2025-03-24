@@ -23,7 +23,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="">Historical Data</a></li>
+                <li><a href="{{ route('historical') }}">Historical Data</a></li>
                 <li><a href="{{ route('about') }}">About AQI</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
                 @auth

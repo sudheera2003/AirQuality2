@@ -1,4 +1,5 @@
 <x-layout>
+
     <head>
         @vite('resources/css/home.css')
         <script src="https://code.jscharting.com/latest/jscharting.js"></script>
@@ -169,7 +170,8 @@
                     });
 
                     const infowindow = new google.maps.InfoWindow({
-                        content: `<strong>${location.name}</strong><br>AQI: <span id="aqi-${location.id}">${location.aqi}</span>`
+                        content: `<strong>${location.name}</strong><br>AQI: <span id="aqi-${location.id}">${location.aqi}</span>
+                    <div id="aqi-chart-${location.id}" style="width: 300px; height: 150px;"></div>` // Chart container
                     });
 
                     // Click event to open info window and update AQI gauge
@@ -178,23 +180,62 @@
                         if (currentInfoWindow) {
                             currentInfoWindow.close();
                         }
+
                         // Open the clicked marker's InfoWindow
                         infowindow.open(map, marker);
+
                         // Update the current InfoWindow
                         currentInfoWindow = infowindow;
+
                         // Set this marker as the active one
                         currentMarker = marker;
+
                         // Set the active sensor ID
                         activeSensorId = location.id;
+
                         // Initialize AQI gauge with the current sensor's AQI value
                         initializeAQIGauge(location.aqi);
+
                         // Update sensor name dynamically in the tooltip
                         document.getElementById('sensor-name').textContent = location.name;
-                        // Fetch and update AQI every 2 seconds (start the interval)
+
+                        // Fetch historical AQI data for the last 24 hours
+                        fetch(`/sensor/${location.id}/historical-aqi`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Extract the last 24 hours' AQI values and recorded times
+                                const aqiValues = data.map(item => item.aqi_value);
+                                const times = data.map(item => new Date(item.recorded_at)
+                                    .toLocaleTimeString());
+
+                                // Create a small chart for the historical AQI data inside the InfoWindow
+                                JSC.chart(`aqi-chart-${location.id}`, {
+                                    type: 'line',
+                                    title_label_text: '24-Hour AQI Trend',
+                                    legend_visible: false,
+                                    xAxis: {
+                                        categories: times,
+                                    },
+                                    yAxis: {
+                                        title_label_text: 'AQI',
+                                        customTicks: [0, 100, 200, 300, 400, 500]
+                                    },
+                                    series: [{
+                                        name: 'AQI',
+                                        points: aqiValues.map((value, index) => [times[
+                                            index], value])
+                                    }]
+                                });
+                            })
+                            .catch(error => console.error('Error fetching historical AQI data:', error));
+
+                        // Periodically update AQI data every 5 seconds (or choose an appropriate interval)
                         if (aqiUpdateInterval) {
-                            clearInterval(aqiUpdateInterval); // Clear any existing intervals
+                            clearInterval(aqiUpdateInterval);
                         }
-                        aqiUpdateInterval = setInterval(() => updateAQIFromServer(location.id), 2000); // Update AQI
+                        aqiUpdateInterval = setInterval(() => {
+                            updateAQIFromServer(location.id);
+                        }, 2000);
                     });
                 });
 
@@ -204,12 +245,16 @@
                     if (currentInfoWindow) {
                         currentInfoWindow.close();
                     }
+
                     // Reset AQI gauge to 0 when clicking on the map
                     initializeAQIGauge(0);
+
                     // Reset the sensor name to default
                     document.getElementById('sensor-name').textContent = ' Select a location';
+
                     // Clear the active sensor ID
                     activeSensorId = null;
+
                     // Clear the existing interval
                     if (aqiUpdateInterval) {
                         clearInterval(aqiUpdateInterval);
@@ -240,4 +285,5 @@
                 }
             });
         </script>
+
 </x-layout>

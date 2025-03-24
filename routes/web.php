@@ -4,6 +4,7 @@ use App\Http\Controllers\SensorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NormalRoutes;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AqiHistoriesController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -36,6 +37,10 @@ Route::get('/about', [NormalRoutes::class,'about'])->name('about');
 Route::get('/contact', [NormalRoutes::class,'contact'])->name('contact');
 
 
+Route::get('/historical', [AqiHistoriesController::class, 'index'])->name('historical');
+Route::get('/historical/days/{sensor}/{month}', [AqiHistoriesController::class, 'getDays']);
+Route::get('/historical/data/{sensor}/{month}/{day}', [AqiHistoriesController::class, 'getData']);
 
+Route::get('/sensor/{sensorId}/historical-aqi', [AqiHistoriesController::class, 'getHistoricalAQI']);
 
 
