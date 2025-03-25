@@ -266,6 +266,66 @@ input, select {
     user-select: none;
 }
 
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th, .admin-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.admin-table thead {
+    background-color: #1f1f1f;
+    color: white;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.save-btn, .delete-admin-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.save-btn {
+    background-color: rgb(34, 177, 76);
+    color: white;
+}
+
+.delete-admin-btn {
+    background-color: #E22020;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: rgb(13, 116, 44);
+}
+
+.delete-admin-btn:hover {
+    background-color: #C91717;
+}
+
+td[contenteditable="true"] {
+    border: 1px solid transparent;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+td[contenteditable="true"]:focus {
+    border: 1px solid #007BFF;
+    background-color: #f0f8ff;
+}
 
 
 

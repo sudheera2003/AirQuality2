@@ -98,6 +98,38 @@
                 </div>
                 <div class="sensor-form">
                     <h2>Edit/Remove Admin</h2>
+
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td contenteditable="true">John Doe</td>
+                                <td contenteditable="true">johndoe@example.com</td>
+                                <td>
+                                    <button class="save-btn">Save</button>
+                                    <button class="delete-admin-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td contenteditable="true">Jane Smith</td>
+                                <td contenteditable="true">janesmith@example.com</td>
+                                <td>
+                                    <button class="save-btn">Save</button>
+                                    <button class="delete-admin-btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ body {
     font-family: "Poppins", sans-serif;
 }
 .container{
-    height:100vh;
+   min-height: 65vh;
 }
 .container h1{
     font-family: "Oswald", sans-serif;
