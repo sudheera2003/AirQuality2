@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Poppins", sans-serif;
+}
+.container{
+    height:100vh;
+}
+.container h1{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+}
+.container h2{
+    font-family: "Oswald", sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #4D4D4D;
+    margin: 10px 0px 30px 20px;
+}
+.sensor-container{
+    margin-left: 20px;
+}
+.sensor-btn {
+    padding: 13px 50px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    background-color: #83f783;
+    border: solid 1px #2a9c2a;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    
+}
+.sensor-btn:hover {
+    background-color: #55f355;
+}
+.sensor-btn:active {
+    border-color: #0b691b;
+    transform: scale(0.95);
+}
+
+.months{
+    margin-left: 30px;
+}
+.month-btn{
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    /* background-color: #c4f1b8;
+    border: solid 0.5px #2a9c2a; */
+    background-color: #fc7c7c;
+    border: solid 0.5px #eb2c2c;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+.month-btn:hover {
+    background-color: #f85858;
+}
+.month-btn:active {
+    border-color: #be1212;
+    transform: scale(0.95);
+}
+
+.days{
+    margin-left: 0px;
+}
+.day-btn{
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    background-color: #a7d0f7;
+    border: solid 0.5px #5792e9;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+.day-btn:hover {
+    background-color: #81bdf5;
+}
+.day-btn:active {
+    border-color: #19417e;
+    transform: scale(0.95);
+}
+.date-title{
+    margin-left: 0px !important;
+    margin-top: 25px !important;
+}
+.sensor-container table {
+    margin-left: 30px;
+    text-align: center;
+    width: 50%;
+    border-collapse: collapse; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.sensor-container table th, .sensor-container table td {
+    padding: 12px 20px;
+    border: 1px solid #ddd; 
+}
+
+.sensor-container table th {
+    width: 70px;
+    font-size: 22px;
+    background-color: #eb6262; 
+    color: white; 
+    text-transform: uppercase; 
+}
+
+.sensor-container table tbody {
+    font-size: 18px;
+}
+
+.sensor-container table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+.sensor-container table td {
+    background-color: #fff; 
+}
+
+.sensor-container table td, .sensor-container table th {
+    text-align: center;
+    vertical-align: middle;
+}
+.error-message {
+    color: red;
+    font-style: italic;
+    font-size: 15px;
+    background-color: #ffe6e6; 
+    border: 1px solid red; 
+    padding: 10px;
+    text-align: center;
+    margin-top: 0px; 
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    width: 50%;
+}
+
+

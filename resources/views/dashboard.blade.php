@@ -9,7 +9,18 @@
     </head>
 
     <body>
-        <span class="welcome-msg">Hello, {{ Auth::user()->name }}</span>
+        <div class="top-flex-section">
+            <div class="welcome-container">
+                <span class="welcome-msg">Hello, {{ Auth::user()->name }}</span>
+            </div>
+
+            <div class="container">
+                <div class="toggle">
+                    <div class="toggle-btn" onclick="Animatedtoggle()"></div>
+                </div>
+                <div class="text">STOP</div>
+            </div>
+        </div>
 
         @if (session('success'))
             <div class="">
@@ -80,6 +91,20 @@
                 </div>
             </div>
         </div>
+
+        <!-- toggle button -->
+    
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggle = document.querySelector(".toggle");
+                const text = document.querySelector(".text");
+
+            toggle.addEventListener("click", function () {
+                toggle.classList.toggle("active");
+                text.textContent = toggle.classList.contains("active") ? "START" : "STOP";
+                });
+            });
+        </script>
 
         <script>
             // Function to fetch updated AQI data and update the dashboard

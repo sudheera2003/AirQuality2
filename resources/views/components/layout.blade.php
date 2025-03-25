@@ -15,10 +15,10 @@
     <header>
         <a href="{{ route('home') }}"><img src="{{ Vite::asset('resources/assets/images/Logo.svg') }}" alt="Logo"></a>
 
-        <div class="search-container">
+        <!-- <div class="search-container">
             <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             <input type="text" class="search-input" placeholder="Search here">
-        </div>
+        </div> -->
         
         <nav>
             <ul class="nav-links">

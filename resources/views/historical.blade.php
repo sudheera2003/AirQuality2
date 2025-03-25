@@ -10,39 +10,42 @@
     <body>
         <div class="container">
             <h1>Historical AQI Data</h1>
-            <div class="sensor-list">
-                @foreach ($sensors as $sensor)
-                    <div class="sensor">
-                        <button class="sensor-btn" data-sensor="{{ $sensor->id }}"
-                            data-sensor-name="{{ $sensor->name }}">
-                            {{ $sensor->name }}
-                        </button>
-                        <div class="months" style="display: none;">
-                            @for ($m = 1; $m <= 12; $m++)
-                                <button class="month-btn" data-sensor="{{ $sensor->id }}"
-                                    data-month="{{ $m }}">
-                                    {{ date('F', mktime(0, 0, 0, $m, 1)) }}
-                                </button>
-                                <div class="days" style="display: none;"></div>
-                            @endfor
+            <h2>Click to expand</h2>
+            <div class="sensor-container">
+                <div class="sensor-list">
+                    @foreach ($sensors as $sensor)
+                        <div class="sensor">
+                            <button class="sensor-btn" data-sensor="{{ $sensor->id }}"
+                                data-sensor-name="{{ $sensor->name }}">
+                                {{ $sensor->name }}
+                            </button>
+                            <div class="months" style="display: none;">
+                                @for ($m = 1; $m <= 12; $m++)
+                                    <button class="month-btn" data-sensor="{{ $sensor->id }}"
+                                        data-month="{{ $m }}">
+                                        {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                    </button>
+                                    <div class="days" style="display: none;"></div>
+                                @endfor
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            <div class="aqi-table" style="display: none;">
-                <h2>AQI Data for <span id="selected-date"></span></h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>AQI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="aqi-data">
-                        <!-- Data will be injected here -->
-                    </tbody>
-                </table>
+                <div class="aqi-table" style="display: none;">
+                    <h2 class="date-title">AQI Data for <span id="selected-date"></span></h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>AQI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aqi-data">
+                            <!-- Data will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -78,7 +81,7 @@
                             if (data.days.length === 0) {
                                 // If there are no available days, display a message
                                 daysHtml =
-                                    `<p style="color: red; font-style: italic;">There is no data for this month</p>`;
+                                    `<p class="error-message">There is no data for this month</p>`;
                             } else {
                                 // Otherwise, display the available days
                                 data.days.forEach(day => {
