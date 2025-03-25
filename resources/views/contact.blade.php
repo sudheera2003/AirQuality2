@@ -21,7 +21,7 @@
                     <p><i class="fa-solid fa-phone-volume" style="color: #ffffff;"></i></p><p>+1012 3456 789</p>
                     </div>
                     <div class="info-item">
-                        <p><i class="fa-solid fa-envelope" style="color: #ffffff;"></i></p><p> demo@gmail.com</p>
+                        <p><i class="fa-solid fa-envelope" style="color: #ffffff;"></i></p><p>ColomboAQI@gmail.com</p>
                     </div>
                     <div class="info-item">
                         <p><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i></p><p> 132 Dartmouth Street Boston, <br> Massachusetts 02156 United States</p>

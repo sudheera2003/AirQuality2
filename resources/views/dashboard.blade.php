@@ -23,12 +23,12 @@
         </div>
 
         @if (session('success'))
-            <div class="alert">
+            <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="alert">
+            <div class="alert alert-error">
                 {{ session('error') }}
             </div>
         @endif
@@ -46,28 +46,39 @@
             </div>
 
             <div class="grid-container" id="sensor-list">
-                <table>
-                    @foreach ($sensors as $sensor)
-                        <tr>
-                            <th>{{ $sensor->id }}</th>
-                            <td>{{ $sensor->name }}</td>
-                            <td>
-                                @if ($sensor->status_id == 1)
-                                    <span class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span>
-                                @else
-                                    <span class="aqi-value">0</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($sensor->status_id == 1)
-                                    <span class="status live">Live</span>
-                                @else
-                                    <span class="status na">Offline</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+            <table class="sensor-table">
+                <tr>
+                    <th>Sensor ID</th>
+                    <th>Sensor Name</th>
+                    <th>AQI Value</th>
+                    <th>Status</th>
+                    <th>Safe Levels</th>
+                </tr>
+                @foreach ($sensors as $sensor)
+                    <tr>
+                        <td>{{ $sensor->id }}</td>
+                        <td>{{ $sensor->name }}</td>
+                        <td>
+                            @if ($sensor->status_id == 1)
+                                <span class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span>
+                            @else
+                                <span class="aqi-value">0</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($sensor->status_id == 1)
+                                <span class="status live">Live</span>
+                            @else
+                                <span class="status na">Offline</span>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="text-col">Healthy</span>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+
             </div>
 
 
@@ -211,10 +222,13 @@ document.addEventListener("DOMContentLoaded", function () {
             fetchAQI();
 
             setTimeout(function() {
-                document.querySelectorAll('.alert').forEach(function(element) {
-                    element.style.display = 'none';
+                document.querySelectorAll('.alert-success, .alert-error').forEach(function(element) {
+                    element.style.transition = "opacity 0.5s ease";
+                    element.style.opacity = "0";
+                    setTimeout(() => element.style.display = "none", 500); // Wait for fade-out before hiding
                 });
             }, 1500);
+
         </script>
     </body>
 </x-layout>

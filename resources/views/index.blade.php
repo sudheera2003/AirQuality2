@@ -15,7 +15,8 @@
             <div class="top-section">
                 <p class="txt-1">Sri Lanka / <span class="col-blk">Colombo</span></p>
                 <h1>Air quality in Colombo</h1>
-                <p class="txt-2">Air quality index (AQI) in Colombo 09:42, Mar 14</p>
+                <p class="txt-2">Air quality index (AQI) in Colombo</p>
+
             </div>
 
             <div class="mid-section">
@@ -51,6 +52,35 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function updateTimestamp() {
+                const now = new Date();
+                
+                // Format time as HH:MM (24-hour format)
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                minutes = minutes < 10 ? "0" + minutes : minutes; // Add leading zero if needed
+                
+                // Format date as 'Mar 14'
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                let formattedDate = monthNames[now.getMonth()] + " " + now.getDate();
+
+                // Combine into final format
+                let formattedTime = `${hours}:${minutes}, ${formattedDate}`;
+
+                // Update the text content immediately
+                document.querySelector('.txt-2').innerHTML = `Air quality index (AQI) in Colombo ${formattedTime}`;
+            }
+
+            // Initial call to set timestamp immediately
+            updateTimestamp();
+
+            // Update timestamp every minute (to ensure accuracy)
+            setInterval(updateTimestamp, 60000);
+
+
+        </script>
 
         <script>
             window.sensorIds = @json($sensors->pluck('id')); // Passing sensor IDs from Blade to JavaScript
