@@ -23,12 +23,12 @@
         </div>
 
         @if (session('success'))
-            <div class="">
+            <div class="alert">
                 {{ session('success') }}
             </div>
         @endif
         @if (session('error'))
-            <div class="">
+            <div class="alert">
                 {{ session('error') }}
             </div>
         @endif
@@ -155,6 +155,12 @@
 
             // Fetch AQI data on page load as well
             fetchAQI();
+
+            setTimeout(function() {
+                document.querySelectorAll('.alert').forEach(function(element) {
+                    element.style.display = 'none';
+                });
+            }, 1500);
         </script>
     </body>
 </x-layout>
