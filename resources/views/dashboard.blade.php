@@ -87,7 +87,7 @@
                 <div class="sensor-container">
                     <div class="sensor-form">
                         <h2>Add Sensors</h2>
-                        <form method="POST" action="{{ route('sensor.store') }}">
+                        <form class="input-group" method="POST" action="{{ route('sensor.store') }}">
                             @csrf
                             <label>Location Name</label>
                             <input type="text" name="name" required>
@@ -111,7 +111,7 @@
                     </div>
                     <div class="sensor-delete">
                         <h2>Delete Sensors</h2>
-                        <form method="POST" action="{{ route('sensor.destroy') }}">
+                        <form class="input-group" method="POST" action="{{ route('sensor.destroy') }}">
                             @csrf
                             <label>Sensor ID</label>
                             <input type="text" name="id" required>

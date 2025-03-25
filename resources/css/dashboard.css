@@ -137,6 +137,7 @@ input, select {
     border-bottom: 1px solid #000;
     outline: none;
     background: transparent;
+    margin-bottom: 10px;
 }
 .form-row {
     display: flex;
