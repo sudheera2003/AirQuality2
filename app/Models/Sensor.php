@@ -12,6 +12,17 @@ class Sensor extends Model
     protected $table = 'sensors'; // Ensure this matches your database table name
 
     protected $fillable = [
-        'name', 'lat', 'lng', 'aqi'
+        'name', 'lat', 'lng', 'aqi', 'status_id'
     ];
+    // Define the relationship with the sensor_statuses table
+    public function status()
+    {
+        return $this->belongsTo(SensorStatus::class, 'status_id');
+    }
+    public function aqiHistories()
+{
+    return $this->hasMany(AqiHistories::class);
+}
+
+
 }
