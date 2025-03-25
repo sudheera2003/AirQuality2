@@ -10,16 +10,18 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-{
-    Schema::create('sensors', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');
-        $table->decimal('lat', 10, 7);
-        $table->decimal('lng', 10, 7);
-        $table->integer('aqi')->default(0); // Default AQI to 0
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('sensors', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->decimal('lat', 10, 7);
+            $table->decimal('lng', 10, 7);
+            $table->integer('aqi')->default(0);
+            $table->unsignedBigInteger('status_id'); 
+            $table->foreign('status_id')->references('id')->on('sensor_statuses')->onDelete('cascade'); // Set up the foreign key constraint
+            $table->timestamps();
+        });
+    }
 
 
     /**

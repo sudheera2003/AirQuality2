@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sensor;
+use App\Models\SensorStatus;
 
 class SensorController extends Controller
 {
@@ -39,6 +40,7 @@ class SensorController extends Controller
             'name' => 'required|string|max:255',
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
+            'status_id' => 'required|exists:sensor_statuses,id', // Validate that the status_id exists in the table
         ]);
 
         // Check if the location with the same latitude and longitude already exists
@@ -57,20 +59,46 @@ class SensorController extends Controller
         $sensor->lat = $request->lat;
         $sensor->lng = $request->lng;
         $sensor->aqi = 0; // Initial AQI value
+        $sensor->status_id = $request->status_id; // Store the selected status_id
+
         $sensor->save();
 
         // Redirect back to the dashboard with a success message
-        return redirect()->route('dashboard')->with('success', 'Sensor added successfully');
+        return redirect()->route('dashboard')->with('success', 'Sensor added successfully!');
     }
 
-    public function getAQI($sensorId)
+    public function getAQI()
     {
-        $sensor = Sensor::find($sensorId); // Retrieve the sensor from the database by its ID
-
-        if ($sensor) {
-            return response()->json(['aqi' => $sensor->aqi]); // Return the AQI value
+        try {
+            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi']);
+            return response()->json($sensors, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        return response()->json(['error' => 'Sensor not found'], 404); // Return error if sensor not found
     }
+    
+
+    public function destroy(Request $request)
+{
+    // Validate the sensor ID
+    $request->validate([
+        'id' => 'required|exists:sensors,id', // Ensures the sensor ID exists in the database
+    ]);
+
+    // Find the sensor by ID
+    $sensor = Sensor::find($request->id);
+
+    if ($sensor) {
+        // Delete related records in the `aqi_histories` table (ensure the relationship is correct)
+        $sensor->aqiHistories()->delete();
+
+        // Now delete the sensor
+        $sensor->delete();
+
+        return redirect()->back()->with('success', 'Sensor and its related data deleted successfully!');
+    } else {
+        return redirect()->back()->with('error', 'Sensor not found!');
+    }
+}
+
 }

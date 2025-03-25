@@ -70,6 +70,11 @@
 
                             // Update the AQI value displayed in the info window
                             document.getElementById('aqi-' + sensorId).textContent = data.aqi;
+
+                            // Dynamically update the AQI status (Good, Moderate, etc.) based on the AQI value
+                            const aqiCategory = getAqiCategory(data.aqi);
+                            document.getElementById('aqi-status-' + sensorId).textContent = aqiCategory.category;
+                            document.getElementById('aqi-status-' + sensorId).style.color = aqiCategory.color;
                         } else {
                             console.error('Error fetching AQI data:', data.error);
                         }
@@ -146,6 +151,41 @@
                 });
             }
 
+            // Function to categorize AQI based on color and category
+            function getAqiCategory(aqiValue) {
+                if (aqiValue >= 0 && aqiValue <= 50) {
+                    return {
+                        category: 'Good',
+                        color: 'green'
+                    };
+                } else if (aqiValue >= 51 && aqiValue <= 100) {
+                    return {
+                        category: 'Moderate',
+                        color: 'yellow'
+                    };
+                } else if (aqiValue >= 101 && aqiValue <= 150) {
+                    return {
+                        category: 'Unhealthy for Sensitive Groups',
+                        color: 'orange'
+                    };
+                } else if (aqiValue >= 151 && aqiValue <= 200) {
+                    return {
+                        category: 'Unhealthy',
+                        color: 'red'
+                    };
+                } else if (aqiValue >= 201 && aqiValue <= 300) {
+                    return {
+                        category: 'Very Unhealthy',
+                        color: 'purple'
+                    };
+                } else {
+                    return {
+                        category: 'Hazardous',
+                        color: 'darkred'
+                    };
+                }
+            }
+
             // Initialize map and fetch sensor locations
             function initMap() {
                 const colombo = {
@@ -157,9 +197,11 @@
                     center: colombo
                 });
 
-                // Loop through sensors and add markers
-                const sensors = @json($sensors);
-                sensors.forEach(location => {
+                // Loop through sensors and add markers for those with status_id = 1
+                const sensors = @json($sensors); // Ensure that sensors include the status_id field
+                sensors.filter(location => location.status_id === 1).forEach(location => {
+                    const aqiCategory = getAqiCategory(location.aqi);
+
                     const marker = new google.maps.Marker({
                         position: {
                             lat: parseFloat(location.lat),
@@ -170,7 +212,9 @@
                     });
 
                     const infowindow = new google.maps.InfoWindow({
-                        content: `<strong>${location.name}</strong><br>AQI: <span id="aqi-${location.id}">${location.aqi}</span>
+                        content: `<div style="font-size: 18px; font-weight: bold;" id="sensor-name-${location.id}">${location.name}</div>
+                      <br>AQI: <span id="aqi-${location.id}">${location.aqi}</span><br>
+                      Status: <span id="aqi-status-${location.id}" style="color: ${aqiCategory.color}; font-weight: bold;">${aqiCategory.category}</span>
                     <div id="aqi-chart-${location.id}" style="width: 300px; height: 150px;"></div>` // Chart container
                     });
 
@@ -193,11 +237,12 @@
                         // Set the active sensor ID
                         activeSensorId = location.id;
 
+                        // Update the selected sensor name in the DOM
+                        document.getElementById('sensor-name').textContent = location
+                            .name; // Update the sensor name here
+
                         // Initialize AQI gauge with the current sensor's AQI value
                         initializeAQIGauge(location.aqi);
-
-                        // Update sensor name dynamically in the tooltip
-                        document.getElementById('sensor-name').textContent = location.name;
 
                         // Fetch historical AQI data for the last 24 hours
                         fetch(`/sensor/${location.id}/historical-aqi`)
@@ -229,14 +274,17 @@
                             })
                             .catch(error => console.error('Error fetching historical AQI data:', error));
 
-                        // Periodically update AQI data every 5 seconds (or choose an appropriate interval)
-                        if (aqiUpdateInterval) {
-                            clearInterval(aqiUpdateInterval);
+                        // Periodically update AQI data only if AQI updates are allowed
+                        if (sessionStorage.getItem("aqiUpdating") === "true") {
+                            if (aqiUpdateInterval) {
+                                clearInterval(aqiUpdateInterval);
+                            }
+                            aqiUpdateInterval = setInterval(() => {
+                                updateAQIFromServer(location.id);
+                            }, 2000);
                         }
-                        aqiUpdateInterval = setInterval(() => {
-                            updateAQIFromServer(location.id);
-                        }, 2000);
                     });
+
                 });
 
                 // Click event on the map to reset the marker and AQI
@@ -265,6 +313,7 @@
                 // Initialize meter with 0 on first load
                 initializeAQIGauge(0);
             }
+
 
             // Add event listener for clicks anywhere on the page
             document.body.addEventListener('click', (event) => {
