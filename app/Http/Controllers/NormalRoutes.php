@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Sensor;
 
 class NormalRoutes extends Controller
 {
@@ -14,9 +15,11 @@ class NormalRoutes extends Controller
         return view('about');
     }
     public function home(){
-        return view('index');
+        $sensors = Sensor::all();
+        return view('index', compact('sensors'));
     }
     public function dashboard(){
-        return view('dashboard');
+        $sensors = Sensor::all();
+        return view('dashboard', compact('sensors'));
     }
 }

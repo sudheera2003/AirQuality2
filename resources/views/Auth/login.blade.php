@@ -26,10 +26,10 @@
                         </div>
                         <button class="Login-btn" type="submit">Login</button>
                     </form>
-            </div>
-        
+            </div>    
 
             @if ($errors->any())
+
                 <div class="error-box">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -38,12 +38,16 @@
                     </ul>
                 </div>
             @endif
+            
 
 
             <div class="extra-links">
                 <a href="">Forgot your password? <span class="reset-txt">Reset Password</span></a><br><br>
                 <a href="{{ route('home') }}"><span class="back-txt">Go back?</span></a>
             </div>
+        </div>
+
+           
         </div>
         <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 
