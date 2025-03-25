@@ -67,16 +67,16 @@ class SensorController extends Controller
         return redirect()->route('dashboard')->with('success', 'Sensor added successfully!');
     }
 
-    public function getAQI($sensorId)
+    public function getAQI()
     {
-        $sensor = Sensor::find($sensorId); // Retrieve the sensor from the database by its ID
-
-        if ($sensor) {
-            return response()->json(['aqi' => $sensor->aqi]); // Return the AQI value
+        try {
+            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi']);
+            return response()->json($sensors, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        return response()->json(['error' => 'Sensor not found'], 404); // Return error if sensor not found
     }
+    
 
     public function destroy(Request $request)
 {

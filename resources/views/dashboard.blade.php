@@ -16,7 +16,7 @@
 
             <div class="container">
                 <div class="toggle">
-                    <div class="toggle-btn" onclick="Animatedtoggle()"></div>
+                    <div class="toggle-btn"></div>
                 </div>
                 <div class="text">STOP</div>
             </div>
@@ -118,20 +118,39 @@
                 </div>
             </div>
         </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.querySelector(".toggle");
+    const text = document.querySelector(".text");
 
-        <!-- toggle button -->
+    // Check stored session state and update the toggle button
+    const savedState = sessionStorage.getItem("aqiUpdating");
+    if (savedState === "true") {
+        toggle.classList.remove("active");
+        text.textContent = "START";
+    } else {
+        toggle.classList.add("active");
+        text.textContent = "STOP";
+    }
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const toggle = document.querySelector(".toggle");
-                const text = document.querySelector(".text");
+    // Handle toggle button click
+    toggle.addEventListener("click", function () {
+        if (toggle.classList.contains("active")) {
+            startAQIUpdates();
+            text.textContent = "STOP";
+            sessionStorage.setItem("aqiUpdating", "true"); // Save the state
+        } else {
+            stopAQIUpdates();
+            text.textContent = "START";
+            sessionStorage.setItem("aqiUpdating", "false"); // Save the state
+        }
+        toggle.classList.toggle("active");
+    });
+});
 
-                toggle.addEventListener("click", function() {
-                    toggle.classList.toggle("active");
-                    text.textContent = toggle.classList.contains("active") ? "START" : "STOP";
-                });
-            });
-        </script>
+</script>
+
+
 
         <script>
             // Function to fetch updated AQI data and update the dashboard
