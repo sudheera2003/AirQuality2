@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sensor;
+use App\Models\SensorStatus;
 
 class NormalRoutes extends Controller
 {
@@ -20,6 +21,8 @@ class NormalRoutes extends Controller
     }
     public function dashboard(){
         $sensors = Sensor::all();
-        return view('dashboard', compact('sensors'));
+        $statuses = SensorStatus::all(); 
+        return view('dashboard', compact('sensors','statuses'));
+
     }
 }

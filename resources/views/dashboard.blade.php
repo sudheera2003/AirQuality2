@@ -32,10 +32,10 @@
                 {{ session('error') }}
             </div>
         @endif
-         <script>
-        // Pass PHP data into JavaScript by assigning it to a global variable
-        window.sensorIds = @json($sensors->pluck('id'));
-    </script>
+        <script>
+            // Pass PHP data into JavaScript by assigning it to a global variable
+            window.sensorIds = @json($sensors->pluck('id'));
+        </script>
 
 
         <div class="dashboard-container">
@@ -46,10 +46,29 @@
             </div>
 
             <div class="grid-container" id="sensor-list">
-                @foreach ($sensors as $sensor)
-                    <div class="grid-item">{{ $sensor->name }} <span class="status live">Live</span> <span
-                            class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span></div>
-                @endforeach
+                <table>
+                    @foreach ($sensors as $sensor)
+                        <tr>
+                            <th>{{ $sensor->id }}</th>
+                            <td>{{ $sensor->name }}</td>
+                            <td>
+                                @if ($sensor->status_id == 1)
+                                    <span class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span>
+                                @else
+                                    <span class="aqi-value">0</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($sensor->status_id == 1)
+                                    <span class="status live">Live</span>
+                                @else
+                                    <span class="status na">Offline</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+
             </div>
 
             <div class="bottom-section">
@@ -68,12 +87,20 @@
                             <label>Longitude</label>
                             <input type="text" name="lng" required>
 
+                            <label>Status</label>
+                            <select name="status_id" required>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->status }}</option>
+                                @endforeach
+                            </select>
+
+
                             <button type="submit" class="delete-btn">Add Location</button>
                         </form>
                     </div>
                     <div class="sensor-delete">
                         <h2>Delete Sensors</h2>
-                        <form method="POST" action="/delete-location">
+                        <form method="POST" action="{{ route('sensor.destroy') }}">
                             @csrf
                             <label>Sensor ID</label>
                             <input type="text" name="id" required>
@@ -93,15 +120,15 @@
         </div>
 
         <!-- toggle button -->
-    
+
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const toggle = document.querySelector(".toggle");
                 const text = document.querySelector(".text");
 
-            toggle.addEventListener("click", function () {
-                toggle.classList.toggle("active");
-                text.textContent = toggle.classList.contains("active") ? "START" : "STOP";
+                toggle.addEventListener("click", function() {
+                    toggle.classList.toggle("active");
+                    text.textContent = toggle.classList.contains("active") ? "START" : "STOP";
                 });
             });
         </script>
