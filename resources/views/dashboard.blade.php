@@ -47,10 +47,17 @@
 
             <div class="grid-container" id="sensor-list">
                 @foreach ($sensors as $sensor)
-                    <div class="grid-item">{{ $sensor->name }} <span class="status live">Live</span> <span
-                            class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</span></div>
+                    <div class="grid-item">
+                        <div class="sensor-name">{{ $sensor->name }}</div>
+                        <div class="sensor-aqi">
+                            <div class="aqi-title">AQI Value</div>
+                            <div class="aqi-value" id="aqi-{{ $sensor->id }}">{{ $sensor->aqi }}</div>
+                        </div>
+                        <span class="status live">Live</span>
+                    </div>
                 @endforeach
             </div>
+
 
             <div class="bottom-section">
                 <h1 class="S-title">Manage Sensors</h1>
@@ -88,6 +95,9 @@
                 <div class="sensor-form">
                     <h2>Create Admin</h2>
                     <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
+                </div>
+                <div class="sensor-form">
+                    <h2>Edit/Remove Admin</h2>
                 </div>
             </div>
         </div>
