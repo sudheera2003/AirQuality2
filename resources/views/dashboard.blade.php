@@ -68,8 +68,8 @@
                         </tr>
                     @endforeach
                 </table>
-
             </div>
+
 
             <div class="bottom-section">
                 <h1 class="S-title">Manage Sensors</h1>
@@ -115,6 +115,9 @@
                 <div class="sensor-form">
                     <h2>Create Admin</h2>
                     <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
+                </div>
+                <div class="sensor-form">
+                    <h2>Edit/Remove Admin</h2>
                 </div>
             </div>
         </div>
