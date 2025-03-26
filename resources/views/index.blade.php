@@ -46,9 +46,7 @@
 
             <div class="bottom-section">
                 <div class="right-msg-field">
-                    <h3>Clean Air!</h3>
-                    <p>You can go outside without fear and enjoy the day</p>
-                    <img src="{{ Vite::asset('resources/assets/images/air.png') }}" alt="Logo">
+                    <img src="{{ Vite::asset('resources/assets/images/About-img-01.png') }}" alt="Logo">
                 </div>
             </div>
         </div>
