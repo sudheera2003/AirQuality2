@@ -45,7 +45,7 @@ class AuthController extends Controller
         );
         User::create($validate);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Admin created successfully!');
     }
 
     public function logout(Request $request){

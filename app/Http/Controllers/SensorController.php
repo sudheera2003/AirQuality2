@@ -80,25 +80,22 @@ class SensorController extends Controller
 
     public function destroy(Request $request)
 {
-    // Validate the sensor ID
-    $request->validate([
-        'id' => 'required|exists:sensors,id', // Ensures the sensor ID exists in the database
-    ]);
-
     // Find the sensor by ID
     $sensor = Sensor::find($request->id);
 
-    if ($sensor) {
-        // Delete related records in the `aqi_histories` table (ensure the relationship is correct)
-        $sensor->aqiHistories()->delete();
-
-        // Now delete the sensor
-        $sensor->delete();
-
-        return redirect()->back()->with('success', 'Sensor and its related data deleted successfully!');
-    } else {
+    if (!$sensor) {
+        // If sensor does not exist, return error message
         return redirect()->back()->with('error', 'Sensor not found!');
     }
+
+    // Delete related records in the `aqi_histories` table
+    $sensor->aqiHistories()->delete();
+
+    // Delete the sensor
+    $sensor->delete();
+
+    return redirect()->back()->with('success', 'Sensor deleted successfully!');
 }
+
 
 }
