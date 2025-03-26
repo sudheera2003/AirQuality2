@@ -18,13 +18,13 @@
                     <h2>Contact Information</h2>
                     <p class="sub-text">Say something to start a live chat!</p>
                     <div class="info-item">
-                    <p><i class="fa-solid fa-phone-volume" style="color: #ffffff;"></i></p><p>+1012 3456 789</p>
+                    <p><i class="fa-solid fa-phone-volume" style="color: #ffffff;"></i></p><p>+94 077 4545 699</p>
                     </div>
                     <div class="info-item">
                         <p><i class="fa-solid fa-envelope" style="color: #ffffff;"></i></p><p>ColomboAQI@gmail.com</p>
                     </div>
                     <div class="info-item">
-                        <p><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i></p><p> 132 Dartmouth Street Boston, <br> Massachusetts 02156 United States</p>
+                        <p><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i></p><p> 132 Dartmouth Street g-watha, <br> Mahawatha 02156 Colombo</p>
                     </div>
                 </div>
             
@@ -47,7 +47,7 @@
                         </div>
                         <div>
                             <label>Phone Number</label>
-                            <input type="text" placeholder="+1 012 3456 789">
+                            <input type="text" placeholder="+94 077 2323 789">
                         </div>
                     </div>
             
@@ -55,8 +55,8 @@
                         <label>Select Subject?</label>
                         <div class="radio-group">
                             <label><input type="radio" name="subject" checked> General Inquiry</label>
-                            <label><input type="radio" name="subject"> General Inquiry</label>
-                            <label><input type="radio" name="subject"> General Inquiry</label>
+                            <label><input type="radio" name="subject"> Technical Support</label>
+                            <label><input type="radio" name="subject"> Collaboration Request</label>
                         </div>
                     </div>
             

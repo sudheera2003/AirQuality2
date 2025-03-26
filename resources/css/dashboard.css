@@ -290,6 +290,9 @@ input, select {
 .admin-table tbody tr:hover {
     background-color: #f1f1f1;
 }
+.delete-admin-form {
+    display: inline-block;
+}
 
 .save-btn, .delete-admin-btn {
     padding: 6px 12px;

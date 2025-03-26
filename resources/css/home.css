@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -34,6 +35,12 @@ body {
     font-weight: 400;
     margin: 6px 0px 10px;
     font-size: 38px;
+}
+.h1-text{
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  margin: 50px 0px 0px;
+  font-size: 30px;
 }
 .txt-2{
     color: #4D4D4D;
@@ -114,8 +121,8 @@ iframe {
   flex-direction: column;
 }
 .aqi-box {
-  padding: 4px 8px; /* Add padding to the boxes for better spacing */
-  border-radius: 5px; /* Optional for rounded corners */
+  padding: 4px 8px; 
+  border-radius: 5px;
   font-weight: bold;
   text-align: center;
 }
@@ -133,10 +140,26 @@ iframe {
 
  .bottom-section{
   text-align: center;
-  margin: 50px 120px;
- }
- 
-  .check-btn {
+}
+.learnmore-btn{
+  padding: 12px 30px;
+  cursor: pointer;
+  background-color: white;
+  border: solid  1px #21D683;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.learnmore-btn:hover {
+  background-color: #21D683;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+.learnmore-btn:active {
+  transform: scale(0.95);
+}    
+.check-btn {
     padding: 10px 30px;
     border: none;
     margin-top: 30px;
