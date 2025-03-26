@@ -220,6 +220,34 @@
                         </form>
                     </div>
                 </div>
+
+                    <div class="sensor-form">
+                        <h2>Edit Sensors</h2>
+                        <form class="input-group" method="POST" action="">
+                            @csrf
+                            <label>Sensor ID</label>
+                            <input type="text" name="id" required>
+
+                            <label>Location Name</label>
+                            <input type="text" name="name" required>
+
+                            <label>Latitude</label>
+                            <input type="text" name="lat" required>
+
+                            <label>Longitude</label>
+                            <input type="text" name="lng" required>
+
+                            <label>Status</label>
+                            <select name="status_id" required>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->status }}</option>
+                                @endforeach
+                            </select>
+
+
+                            <button type="submit" class="delete-btn">Edit Changes</button>
+                        </form>
+                    </div>
             </div>
 
             <div class="admin-section">
