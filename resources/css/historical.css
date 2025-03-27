@@ -6,6 +6,7 @@
 }
 body {
     font-family: "Poppins", sans-serif;
+    min-height: 100vh !important;
 }
 .container{
    min-height: 65vh;

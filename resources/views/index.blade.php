@@ -343,7 +343,7 @@
             }
 
 
-            // Add event listener for clicks anywhere on the page
+            // Event listener for clicks anywhere on the page
             document.body.addEventListener('click', (event) => {
                 // If the click is outside the map and marker
                 if (!event.target.closest('#map') && currentMarker) {
