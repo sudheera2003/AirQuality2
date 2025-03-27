@@ -43,11 +43,13 @@
                     </div>
                 </div>
             </div>
-
+            
+            <h1 class="h1-text">AQI Save Levels</h1>
             <div class="bottom-section">
                 <div class="right-msg-field">
-                    <img src="{{ Vite::asset('resources/assets/images/About-img-01.png') }}" alt="Logo">
+                    <img src="{{ Vite::asset('resources/assets/images/AQI-Scale.png') }}" alt="Logo">  
                 </div>
+                <a href="{{ route('about') }}"><button class="learnmore-btn">Learn more</button></a>
             </div>
         </div>
 
