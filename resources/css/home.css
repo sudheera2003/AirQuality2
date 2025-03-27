@@ -142,23 +142,22 @@ iframe {
   text-align: center;
 }
 .learnmore-btn{
-  padding: 12px 30px;
   cursor: pointer;
-  background-color: white;
-  border: solid  1px #21D683;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 400;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  color: #4D4D4D;
+  transition: all 0.4s;
+  margin-top: -20px;
 }
-.learnmore-btn:hover {
-  background-color: #21D683;
-  color: white;
-  transition: all 0.3s ease-in-out;
+.learnmore-btn:hover{
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #21D683;
+  text-decoration: underline;
 }
-.learnmore-btn:active {
-  transform: scale(0.95);
-}    
+  
 .check-btn {
     padding: 10px 30px;
     border: none;

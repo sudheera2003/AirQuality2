@@ -38,18 +38,19 @@
                             <p class="col-txt-1">Colombo 10 <span class="aqi-box aqi-low">55</span></p>
                         </div>
                         <div>
-                            <button class="check-btn">Check Historical Data</button>
+                            <a href="{{ route('historical') }}"><button class="check-btn">Check Historical Data</button></a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <h1 class="h1-text">AQI Save Levels</h1>
+            
             <div class="bottom-section">
+                <h1 class="h1-text">AQI Save Levels</h1>
                 <div class="right-msg-field">
                     <img src="{{ Vite::asset('resources/assets/images/AQI-Scale.png') }}" alt="Logo">  
                 </div>
-                <a href="{{ route('about') }}"><button class="learnmore-btn">Learn more</button></a>
+                <a href="{{ route('about') }}"><p class="learnmore-btn">Learn more</p></a>
             </div>
         </div>
 
