@@ -171,8 +171,9 @@
                                             // Add AQI level indicators
                                             if (value === 50) return '50 (Good)';
                                             if (value === 100) return '100 (Moderate)';
-                                            if (value === 150) return '150 (Unhealthy)';
-                                            if (value === 200) return '200 (Very Unhealthy)';
+                                            if (value === 150) return '150 (Unhealthy for sensitive groups)';
+                                            if (value === 200) return '200 (Unhealthy)';
+                                            if (value === 250) return '250 (Very Unhealthy)';
                                             if (value === 300) return '300 (Hazardous)';
                                             return value;
                                         }
