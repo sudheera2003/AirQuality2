@@ -55,6 +55,8 @@
     </head>
 
     <body>
+        <div class="container">
+        <h1>Historical AQI Data</h1>
 
         {{-- -------------------------------------------------------------------------------- --}}
 
@@ -77,8 +79,8 @@
 
 
         {{-- ------------------------------------------------------------------------------------ --}}
-        <div class="container">
-            <h1>Historical AQI Data</h1>
+        
+            <h1>AQI Data - Table View</h1>
             <h2>Click to expand</h2>
             <div class="sensor-container">
                 <div class="sensor-list">

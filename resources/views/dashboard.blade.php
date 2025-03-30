@@ -211,11 +211,15 @@
             </div>
 
             <div class="container">
-                <div class="toggle">
-                    <div class="toggle-btn"></div>
+                <h3>ON/OFF Data Simulation</h3>
+                <div class="toggle-section">
+                    <div class="toggle">
+                        <div class="toggle-btn"></div>
+                    </div>
+                    <div class="text">STOP</div>
                 </div>
-                <div class="text">STOP</div>
             </div>
+
         </div>
         {{-- @if (session('success'))
             <div class="alert alert-success">
@@ -474,15 +478,15 @@
                 } else if (aqi <= 200) {
                     levelText = "Unhealthy";
                     colorText = "purple";
-                    showNotification('Warning', 'High AQI in '+name, 'purple', 0);
+                    // showNotification('Warning', 'High AQI in '+name, 'purple', 0);
                 } else if (aqi <= 300) {
                     levelText = "Very Unhealthy";
                     colorText = "red";
-                    showNotification('Warning', 'High AQI in '+name, 'red', 0);
+                    // showNotification('Warning', 'High AQI in '+name, 'red', 0);
                 } else {
                     levelText = "Hazardous";
                     colorText = "darkred";
-                    showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
+                    // showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
                 }
                 document.getElementById("safe-" + id).textContent = levelText;
                 document.getElementById("safe-" + id).style.color = colorText;
