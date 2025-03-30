@@ -221,12 +221,26 @@ input, select {
 .container {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50px;
+    height: auto;
 }
 
-.container .toggle {
+h3 {
+    margin-bottom: 15px; 
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    color: #333;
+}
+
+.toggle-section {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+}
+
+.toggle {
     position: relative;
     width: 90px;
     height: 40px;
@@ -238,7 +252,7 @@ input, select {
     user-select: none;
 }
 
-.container .toggle .toggle-btn {
+.toggle-btn {
     position: absolute;
     top: 5px;
     left: 5px;
@@ -251,21 +265,21 @@ input, select {
     user-select: none;
 }
 
-.container .toggle.active {
+.toggle.active {
     background: rgb(189, 31, 31);
 }
 
-.container .toggle.active .toggle-btn {
+.toggle.active .toggle-btn {
     left: 45px;
 }
 
 .text {
     font-size: 18px;
     font-family: "Poppins", sans-serif;
-    margin-left: 10px;
     color: #333;
     user-select: none;
 }
+
 
 .admin-table {
     width: 100%;
