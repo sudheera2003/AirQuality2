@@ -17,8 +17,9 @@
                 top: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0,0,0,0.5);
+                background-color: rgba(0, 0, 0, 0.5);
             }
+
             .modal-content {
                 background-color: #fefefe;
                 margin: 15% auto;
@@ -26,54 +27,151 @@
                 border-radius: 8px;
                 width: 400px;
                 max-width: 80%;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
+
             .modal-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 15px;
             }
+
             .modal-title {
                 font-size: 1.2rem;
                 font-weight: bold;
             }
+
             .modal-body {
                 margin-bottom: 20px;
             }
+
             .modal-footer {
                 display: flex;
                 justify-content: flex-end;
                 gap: 10px;
             }
+
             .modal-btn {
                 padding: 8px 16px;
                 border: none;
                 border-radius: 4px;
                 cursor: pointer;
             }
+
             .modal-btn-primary {
                 background-color: #4CAF50;
                 color: white;
             }
+
             .modal-btn-secondary {
                 background-color: #f44336;
                 color: white;
             }
+
             .modal-success .modal-title {
                 color: #4CAF50;
             }
+
             .modal-error .modal-title {
                 color: #f44336;
             }
+
             .modal-confirm .modal-title {
                 color: #2196F3;
+            }
+
+            .notification-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 300px;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                background-color: #fff;
+                border-left: 5px solid #4CAF50;
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .notification.show {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            .notification.purple {
+                border-left-color: purple;
+            }
+
+            .notification.red {
+                border-left-color: red;
+            }
+
+            .notification.darkred {
+                border-left-color: darkred;
+            }
+
+            .notification-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .notification-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+
+            .notification-message {
+                font-size: 14px;
+                color: #555;
+            }
+
+            .notification-close {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: #888;
+                margin-left: 10px;
+                padding: 0 5px;
+            }
+
+            .notification-close:hover {
+                color: #333;
             }
         </style>
     </head>
 
     <body>
-     <!-- Modal -->
+        <!-- Notification Container -->
+        <div id="notification-container" class="notification-container">
+            <!-- Notifications will be added here dynamically -->
+        </div>
+
+        <!-- Notification Template (Hidden) -->
+        <div id="notification-template" class="notification" style="display: none;">
+            <div class="notification-content">
+                <span class="notification-title"></span>
+                <span class="notification-message"></span>
+            </div>
+            <button class="notification-close">&times;</button>
+        </div>
+
+        <!-- Modal -->
         <div id="messageModal" class="modal">
             <div class="modal-content" id="modalContent">
                 <div class="modal-header">
@@ -201,6 +299,7 @@
 
                             <label>Status</label>
                             <select name="status_id" required>
+                                <option value="">Select Status</option>
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status->id }}">{{ $status->status }}</option>
                                 @endforeach
@@ -220,34 +319,39 @@
                         </form>
                     </div>
                 </div>
+                <div class="sensor-form">
+                    <h2>Edit Sensors</h2>
+                    <form class="input-group" id="editSensorForm">
+                        @csrf
+                        @method('PUT')
 
-                    <div class="sensor-form">
-                        <h2>Edit Sensors</h2>
-                        <form class="input-group" method="POST" action="">
-                            @csrf
-                            <label>Sensor ID</label>
-                            <input type="text" name="id" required>
+                        <label>Sensor ID</label>
+                        <div style="display: flex; align-items: center;">
+                            <input type="text" name="id" id="sensor_id" required
+                                onchange="fetchSensorData(this.value)">
+                            <div id="sensorSpinner" class="loading-spinner" style="display: none;"></div>
+                        </div>
 
-                            <label>Location Name</label>
-                            <input type="text" name="name" required>
+                        <label>Location Name</label>
+                        <input type="text" name="name" id="sensor_name" required>
 
-                            <label>Latitude</label>
-                            <input type="text" name="lat" required>
+                        <label>Latitude</label>
+                        <input type="text" name="lat" id="sensor_lat" required>
 
-                            <label>Longitude</label>
-                            <input type="text" name="lng" required>
+                        <label>Longitude</label>
+                        <input type="text" name="lng" id="sensor_lng" required>
 
-                            <label>Status</label>
-                            <select name="status_id" required>
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status->id }}">{{ $status->status }}</option>
-                                @endforeach
-                            </select>
+                        <label>Status</label>
+                        <select name="status_id" id="sensor_status" required>
+                            <option value="">Select Status</option>
+                            @foreach ($statuses as $status)
+                                <option value="{{ $status->id }}">{{ $status->status }}</option>
+                            @endforeach
+                        </select>
 
-
-                            <button type="submit" class="delete-btn">Edit Changes</button>
-                        </form>
-                    </div>
+                        <button type="button" class="delete-btn" onclick="updateSensor()">Save Changes</button>
+                    </form>
+                </div>
             </div>
 
             <div class="admin-section">
@@ -257,9 +361,9 @@
                     <a href="{{ route('dashboard.register') }}"><button class="r-btn">Register Admin</button></a>
                 </div>
                 <div>
-                <div class="sensor-form">
-                    <h2>Edit/Remove Admin</h2>
-                </div>
+                    <div class="sensor-form">
+                        <h2>Edit/Remove Admin</h2>
+                    </div>
                     <table class="admin-table">
                         <thead>
                             <tr>
@@ -334,7 +438,7 @@
                             const safeElement = document.getElementById('safe-' + sensor.id);
                             if (aqiElement && safeElement) {
                                 aqiElement.textContent = sensor.aqi; // Update the AQI value
-                                updateSafeLevels(sensor.aqi, sensor.id);
+                                updateSafeLevels(sensor.aqi, sensor.id, sensor.name);
                             }
                         });
                     })
@@ -355,7 +459,7 @@
                 });
             }, 1500);
 
-            function updateSafeLevels(aqi, id) {
+            function updateSafeLevels(aqi, id, name) {
                 let levelText = "";
                 let colorText = "";
                 if (aqi <= 50) {
@@ -370,17 +474,20 @@
                 } else if (aqi <= 200) {
                     levelText = "Unhealthy";
                     colorText = "purple";
+                    showNotification('Warning', 'High AQI in '+name, 'purple', 0);
                 } else if (aqi <= 300) {
                     levelText = "Very Unhealthy";
                     colorText = "red";
+                    showNotification('Warning', 'High AQI in '+name, 'red', 0);
                 } else {
                     levelText = "Hazardous";
                     colorText = "darkred";
+                    showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
                 }
                 document.getElementById("safe-" + id).textContent = levelText;
                 document.getElementById("safe-" + id).style.color = colorText;
             }
-             document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function() {
                 // Initialize modals
                 const messageModal = document.getElementById('messageModal');
                 const confirmModal = document.getElementById('confirmModal');
@@ -400,18 +507,19 @@
                 // Close message modal
                 modalOkBtn.addEventListener('click', function() {
                     messageModal.style.display = 'none';
+                    window.location.reload();
                 });
 
                 // Confirmation modal
                 window.showConfirm = function(message, callback) {
                     document.getElementById('confirmBody').textContent = message;
                     confirmModal.style.display = 'block';
-                    
+
                     confirmOkBtn.onclick = function() {
                         confirmModal.style.display = 'none';
                         callback(true);
                     };
-                    
+
                     confirmCancelBtn.onclick = function() {
                         confirmModal.style.display = 'none';
                         callback(false);
@@ -433,32 +541,34 @@
                     button.addEventListener('click', function(e) {
                         e.preventDefault();
                         const form = this.closest('form');
-                        
+
                         showConfirm('Are you sure you want to delete this admin?', function(confirmed) {
                             if (confirmed) {
                                 fetch(form.action, {
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        _method: 'DELETE'
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': document.querySelector(
+                                                'meta[name="csrf-token"]').content,
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            _method: 'DELETE'
+                                        })
                                     })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        form.closest('tr').remove();
-                                        showMessage('Success', data.message, 'success');
-                                    } else {
-                                        showMessage('Error', data.message, 'error');
-                                    }
-                                })
-                                .catch(error => {
-                                    showMessage('Error', 'Error: ' + error.message, 'error');
-                                });
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            form.closest('tr').remove();
+                                            showMessage('Success', data.message, 'success');
+                                        } else {
+                                            showMessage('Error', data.message, 'error');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        showMessage('Error', 'Error: ' + error.message,
+                                            'error');
+                                    });
                             }
                         });
                     });
@@ -487,9 +597,11 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    showMessage('Success', 'Admin updated successfully!', 'success');
+                                    showMessage('Success', 'Admin updated successfully!',
+                                        'success');
                                 } else {
-                                    showMessage('Error', 'Error updating admin: ' + data.message, 'error');
+                                    showMessage('Error', 'Error updating admin: ' + data.message,
+                                        'error');
                                 }
                             })
                             .catch(error => {
@@ -505,6 +617,131 @@
                     showMessage('Error', '{{ session('error') }}', 'error');
                 @endif
             });
+
+            async function fetchSensorData(sensorId) {
+                if (!sensorId) return;
+
+                const spinner = document.getElementById('sensorSpinner');
+                spinner.style.display = 'inline-block';
+
+                try {
+                    const response = await fetch(`sensors/${sensorId}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Failed to fetch sensor data');
+                    }
+
+                    const data = await response.json();
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Invalid sensor data');
+                    }
+
+                    // Fill the form
+                    document.getElementById('sensor_name').value = data.data.name || '';
+                    document.getElementById('sensor_lat').value = data.data.lat || '';
+                    document.getElementById('sensor_lng').value = data.data.lng || '';
+                    document.getElementById('sensor_status').value = data.data.status_id || '';
+
+                } catch (error) {
+                    showMessage('Error', "Sensor Not Found!", 'error');
+                    clearForm();
+                } finally {
+                    spinner.style.display = 'none';
+                }
+            }
+
+            function clearForm() {
+                document.getElementById('sensor_name').value = '';
+                document.getElementById('sensor_lat').value = '';
+                document.getElementById('sensor_lng').value = '';
+                document.getElementById('sensor_status').value = '';
+            }
+
+            async function updateSensor() {
+                const formData = {
+                    name: document.getElementById('sensor_name').value,
+                    lat: document.getElementById('sensor_lat').value,
+                    lng: document.getElementById('sensor_lng').value,
+                    status_id: document.getElementById('sensor_status').value
+                };
+
+                const sensorId = document.getElementById('sensor_id').value;
+
+                try {
+                    const response = await fetch(`/sensors/${sensorId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Update failed');
+                    }
+                    showMessage('Success', 'Sensor updated successfully!', 'success');
+                } catch (error) {
+                    showMessage('Error', "Failed to update sensor", 'error');
+                }
+            }
+
+            // Notification function
+            function showNotification(title, message, type = 'success', duration = 5000) {
+                const container = document.getElementById('notification-container');
+                const template = document.getElementById('notification-template');
+
+                // Clone the template
+                const notification = template.cloneNode(true);
+                notification.id = '';
+                notification.style.display = 'flex';
+                notification.classList.add(type);
+
+                // Set content
+                notification.querySelector('.notification-title').textContent = title;
+                notification.querySelector('.notification-message').textContent = message;
+
+                // close handler
+                const closeBtn = notification.querySelector('.notification-close');
+                closeBtn.addEventListener('click', () => {
+                    hideNotification(notification);
+                });
+
+                // Add
+                container.appendChild(notification);
+
+                // Show animation
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+
+                // Auto-hide if duration is set
+                if (duration > 0) {
+                    setTimeout(() => {
+                        hideNotification(notification);
+                    }, duration);
+                }
+
+                return notification;
+            }
+
+            // Hide notification with animation
+            function hideNotification(notification) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
 
         </script>
     </body>

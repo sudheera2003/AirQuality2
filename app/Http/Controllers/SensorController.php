@@ -70,32 +70,81 @@ class SensorController extends Controller
     public function getAQI()
     {
         try {
-            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi']);
+            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi','name']);
             return response()->json($sensors, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
 
     public function destroy(Request $request)
-{
-    // Find the sensor by ID
-    $sensor = Sensor::find($request->id);
+    {
+        // Find the sensor by ID
+        $sensor = Sensor::find($request->id);
 
-    if (!$sensor) {
-        // If sensor does not exist, return error message
-        return redirect()->back()->with('error', 'Sensor not found!');
+        if (!$sensor) {
+            // If sensor does not exist, return error message
+            return redirect()->back()->with('error', 'Sensor not found!');
+        }
+
+        // Delete related records in the `aqi_histories` table
+        $sensor->aqiHistories()->delete();
+
+        // Delete the sensor
+        $sensor->delete();
+
+        return redirect()->back()->with('success', 'Sensor deleted successfully!');
+    }
+    public function show($id)
+    {
+        try {
+            $sensor = Sensor::with('status')->findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $sensor->id,
+                    'name' => $sensor->name,
+                    'lat' => $sensor->lat,
+                    'lng' => $sensor->lng,
+                    'status_id' => $sensor->status_id,
+                    'status' => $sensor->status->status ?? 'Unknown'
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Sensor not found',
+                'message' => $e->getMessage()
+            ], 404);
+        }
     }
 
-    // Delete related records in the `aqi_histories` table
-    $sensor->aqiHistories()->delete();
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric',
+            'status_id' => 'required|exists:sensor_statuses,id'
+        ]);
 
-    // Delete the sensor
-    $sensor->delete();
+        try {
+            $sensor = Sensor::findOrFail($id);
+            $sensor->update($validated);
 
-    return redirect()->back()->with('success', 'Sensor deleted successfully!');
-}
-
-
+            return response()->json([
+                'success' => true,
+                'message' => 'Sensor updated successfully',
+                'data' => $sensor
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Update failed',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

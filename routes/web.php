@@ -49,6 +49,11 @@ Route::get('/historical', [AqiHistoriesController::class, 'index'])->name('histo
 Route::get('/historical/days/{sensor}/{month}', [AqiHistoriesController::class, 'getDays']);
 Route::get('/historical/data/{sensor}/{month}/{day}', [AqiHistoriesController::class, 'getData']);
 
+Route::get('/api/sensors/{sensor}/history', [AqiHistoriesController::class, 'history'])->name('api.sensors.history');
+
 Route::get('/sensor/{sensorId}/historical-aqi', [AqiHistoriesController::class, 'getHistoricalAQI']);
 
 Route::post('/contact/send', [ContactController::class, 'send']);
+
+Route::put('/sensors/{id}', [SensorController::class, 'update'])->name('api.sensors.update');
+Route::get('/sensors/{id}', [SensorController::class, 'show'])->name('api.sensors.show');
