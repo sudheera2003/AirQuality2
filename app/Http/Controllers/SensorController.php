@@ -70,7 +70,7 @@ class SensorController extends Controller
     public function getAQI()
     {
         try {
-            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi']);
+            $sensors = Sensor::where('status_id', 1)->get(['id', 'aqi','name']);
             return response()->json($sensors, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

@@ -80,10 +80,97 @@
             .modal-confirm .modal-title {
                 color: #2196F3;
             }
+
+            .notification-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 300px;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                background-color: #fff;
+                border-left: 5px solid #4CAF50;
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .notification.show {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            .notification.purple {
+                border-left-color: purple;
+            }
+
+            .notification.red {
+                border-left-color: red;
+            }
+
+            .notification.darkred {
+                border-left-color: darkred;
+            }
+
+            .notification-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .notification-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-size: 16px;
+            }
+
+            .notification-message {
+                font-size: 14px;
+                color: #555;
+            }
+
+            .notification-close {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: #888;
+                margin-left: 10px;
+                padding: 0 5px;
+            }
+
+            .notification-close:hover {
+                color: #333;
+            }
         </style>
     </head>
 
     <body>
+        <!-- Notification Container -->
+        <div id="notification-container" class="notification-container">
+            <!-- Notifications will be added here dynamically -->
+        </div>
+
+        <!-- Notification Template (Hidden) -->
+        <div id="notification-template" class="notification" style="display: none;">
+            <div class="notification-content">
+                <span class="notification-title"></span>
+                <span class="notification-message"></span>
+            </div>
+            <button class="notification-close">&times;</button>
+        </div>
+
         <!-- Modal -->
         <div id="messageModal" class="modal">
             <div class="modal-content" id="modalContent">
@@ -212,7 +299,7 @@
 
                             <label>Status</label>
                             <select name="status_id" required>
-                            <option value="">Select Status</option>
+                                <option value="">Select Status</option>
                                 @foreach ($statuses as $status)
                                     <option value="{{ $status->id }}">{{ $status->status }}</option>
                                 @endforeach
@@ -351,7 +438,7 @@
                             const safeElement = document.getElementById('safe-' + sensor.id);
                             if (aqiElement && safeElement) {
                                 aqiElement.textContent = sensor.aqi; // Update the AQI value
-                                updateSafeLevels(sensor.aqi, sensor.id);
+                                updateSafeLevels(sensor.aqi, sensor.id, sensor.name);
                             }
                         });
                     })
@@ -372,7 +459,7 @@
                 });
             }, 1500);
 
-            function updateSafeLevels(aqi, id) {
+            function updateSafeLevels(aqi, id, name) {
                 let levelText = "";
                 let colorText = "";
                 if (aqi <= 50) {
@@ -387,12 +474,15 @@
                 } else if (aqi <= 200) {
                     levelText = "Unhealthy";
                     colorText = "purple";
+                    showNotification('Warning', 'High AQI in '+name, 'purple', 0);
                 } else if (aqi <= 300) {
                     levelText = "Very Unhealthy";
                     colorText = "red";
+                    showNotification('Warning', 'High AQI in '+name, 'red', 0);
                 } else {
                     levelText = "Hazardous";
                     colorText = "darkred";
+                    showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
                 }
                 document.getElementById("safe-" + id).textContent = levelText;
                 document.getElementById("safe-" + id).style.color = colorText;
@@ -560,7 +650,7 @@
                     document.getElementById('sensor_status').value = data.data.status_id || '';
 
                 } catch (error) {
-                    showMessage('Error',"Sensor Not Found!",'error');
+                    showMessage('Error', "Sensor Not Found!", 'error');
                     clearForm();
                 } finally {
                     spinner.style.display = 'none';
@@ -600,11 +690,59 @@
                     if (!response.ok) {
                         throw new Error(data.message || 'Update failed');
                     }
-                    showMessage('Success','Sensor updated successfully!','success');
+                    showMessage('Success', 'Sensor updated successfully!', 'success');
                 } catch (error) {
-                    showMessage('Error',"Failed to update sensor",'error');
+                    showMessage('Error', "Failed to update sensor", 'error');
                 }
             }
+
+            // Notification function
+            function showNotification(title, message, type = 'success', duration = 5000) {
+                const container = document.getElementById('notification-container');
+                const template = document.getElementById('notification-template');
+
+                // Clone the template
+                const notification = template.cloneNode(true);
+                notification.id = '';
+                notification.style.display = 'flex';
+                notification.classList.add(type);
+
+                // Set content
+                notification.querySelector('.notification-title').textContent = title;
+                notification.querySelector('.notification-message').textContent = message;
+
+                // close handler
+                const closeBtn = notification.querySelector('.notification-close');
+                closeBtn.addEventListener('click', () => {
+                    hideNotification(notification);
+                });
+
+                // Add
+                container.appendChild(notification);
+
+                // Show animation
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+
+                // Auto-hide if duration is set
+                if (duration > 0) {
+                    setTimeout(() => {
+                        hideNotification(notification);
+                    }, duration);
+                }
+
+                return notification;
+            }
+
+            // Hide notification with animation
+            function hideNotification(notification) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+
         </script>
     </body>
 </x-layout>
