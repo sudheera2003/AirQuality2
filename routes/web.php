@@ -54,3 +54,6 @@ Route::get('/api/sensors/{sensor}/history', [AqiHistoriesController::class, 'his
 Route::get('/sensor/{sensorId}/historical-aqi', [AqiHistoriesController::class, 'getHistoricalAQI']);
 
 Route::post('/contact/send', [ContactController::class, 'send']);
+
+Route::put('/sensors/{id}', [SensorController::class, 'update'])->name('api.sensors.update');
+Route::get('/sensors/{id}', [SensorController::class, 'show'])->name('api.sensors.show');
