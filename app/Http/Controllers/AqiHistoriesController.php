@@ -20,7 +20,7 @@ class AqiHistoriesController extends Controller
     public function getDays($sensorId, $month)
     {
         $days = AqiHistories::where('sensor_id', $sensorId)
-            ->whereMonth('created_at', $month) // Changed recorded_at to created_at
+            ->whereMonth('created_at', $month)
             ->selectRaw('DAY(created_at) as day')
             ->distinct()
             ->pluck('day');
@@ -31,7 +31,7 @@ class AqiHistoriesController extends Controller
     public function getData($sensorId, $month, $day)
     {
         $aqiRecords = AqiHistories::where('sensor_id', $sensorId)
-            ->whereMonth('created_at', $month) // Changed recorded_at to created_at
+            ->whereMonth('created_at', $month)
             ->whereDay('created_at', $day)
             ->orderBy('created_at')
             ->get(['created_at', 'aqi_value'])
@@ -47,7 +47,7 @@ class AqiHistoriesController extends Controller
     public function getHistoricalAQI($sensorId)
     {
         $historicalData = \App\Models\AqiHistories::where('sensor_id', $sensorId)
-            ->where('recorded_at', '>=', now()->subDay()) // Get data from the last 24 hours
+            ->where('recorded_at', '>=', now()->subDay())
             ->orderBy('recorded_at')
             ->get();
 

@@ -9,7 +9,6 @@ class ContactController extends Controller
 {
     public function send(Request $request)
     {
-        // Validate input fields
         $request->validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -19,7 +18,6 @@ class ContactController extends Controller
             'message' => 'required|string|min:10',
         ]);
 
-        // Example: Save to database or send an email
         Mail::raw("New Contact Message from {$request->first_name} {$request->last_name}.\n\n{$request->message}", function ($mail) use ($request) {
             $mail->to('sudheeradilum@gmail.com')
                  ->subject("New Contact Message - {$request->subject}")

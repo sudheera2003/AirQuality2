@@ -159,10 +159,10 @@
     <body>
         <!-- Notification Container -->
         <div id="notification-container" class="notification-container">
-            <!-- Notifications will be added here dynamically -->
+            <!-- Notifications will be added here -->
         </div>
 
-        <!-- Notification Template (Hidden) -->
+        <!-- Notification Template -->
         <div id="notification-template" class="notification" style="display: none;">
             <div class="notification-content">
                 <span class="notification-title"></span>
@@ -221,18 +221,7 @@
             </div>
 
         </div>
-        {{-- @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-error">
-                {{ session('error') }}
-            </div>
-        @endif --}}
         <script>
-            // Pass PHP data into JavaScript by assigning it to a global variable
             window.sensorIds = @json($sensors->pluck('id'));
         </script>
 
@@ -419,11 +408,11 @@
                     if (toggle.classList.contains("active")) {
                         startAQIUpdates();
                         text.textContent = "STOP";
-                        sessionStorage.setItem("aqiUpdating", "true"); // Save the state
+                        sessionStorage.setItem("aqiUpdating", "true");
                     } else {
                         stopAQIUpdates();
                         text.textContent = "START";
-                        sessionStorage.setItem("aqiUpdating", "false"); // Save the state
+                        sessionStorage.setItem("aqiUpdating", "false");
                     }
                     toggle.classList.toggle("active");
                 });
@@ -433,15 +422,14 @@
         <script>
             // Function to fetch updated AQI data and update the dashboard
             function fetchAQI() {
-                fetch('/api/sensors/aqi') // API endpoint to get sensor AQI data
+                fetch('/api/sensors/aqi')
                     .then(response => response.json())
                     .then(data => {
-                        // Loop through the data and update AQI values
                         data.forEach(sensor => {
                             const aqiElement = document.getElementById('aqi-' + sensor.id);
                             const safeElement = document.getElementById('safe-' + sensor.id);
                             if (aqiElement && safeElement) {
-                                aqiElement.textContent = sensor.aqi; // Update the AQI value
+                                aqiElement.textContent = sensor.aqi;
                                 updateSafeLevels(sensor.aqi, sensor.id, sensor.name);
                             }
                         });
@@ -449,10 +437,8 @@
                     .catch(error => console.error('Error fetching AQI data:', error));
             }
 
-            // Fetch AQI data
             setInterval(fetchAQI, 2000);
 
-            // Fetch AQI data on page load as well
             fetchAQI();
 
             setTimeout(function() {
@@ -478,15 +464,15 @@
                 } else if (aqi <= 200) {
                     levelText = "Unhealthy";
                     colorText = "purple";
-                    // showNotification('Warning', 'High AQI in '+name, 'purple', 0);
+                    showNotification('Warning', 'High AQI in '+name, 'purple', 0);
                 } else if (aqi <= 300) {
                     levelText = "Very Unhealthy";
                     colorText = "red";
-                    // showNotification('Warning', 'High AQI in '+name, 'red', 0);
+                    showNotification('Warning', 'High AQI in '+name, 'red', 0);
                 } else {
                     levelText = "Hazardous";
                     colorText = "darkred";
-                    // showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
+                    showNotification('Warning', 'High AQI in '+name, 'darkred', 0);
                 }
                 document.getElementById("safe-" + id).textContent = levelText;
                 document.getElementById("safe-" + id).style.color = colorText;
@@ -530,7 +516,6 @@
                     };
                 };
 
-                // Close modals when clicking outside
                 window.addEventListener('click', function(event) {
                     if (event.target === messageModal) {
                         messageModal.style.display = 'none';
@@ -540,7 +525,6 @@
                     }
                 });
 
-                // Replace all alert confirmations with modal
                 document.querySelectorAll('.delete-admin-btn').forEach(button => {
                     button.addEventListener('click', function(e) {
                         e.preventDefault();
@@ -705,23 +689,19 @@
                 const container = document.getElementById('notification-container');
                 const template = document.getElementById('notification-template');
 
-                // Clone the template
                 const notification = template.cloneNode(true);
                 notification.id = '';
                 notification.style.display = 'flex';
                 notification.classList.add(type);
 
-                // Set content
                 notification.querySelector('.notification-title').textContent = title;
                 notification.querySelector('.notification-message').textContent = message;
 
-                // close handler
                 const closeBtn = notification.querySelector('.notification-close');
                 closeBtn.addEventListener('click', () => {
                     hideNotification(notification);
                 });
 
-                // Add
                 container.appendChild(notification);
 
                 // Show animation
@@ -729,7 +709,6 @@
                     notification.classList.add('show');
                 }, 10);
 
-                // Auto-hide if duration is set
                 if (duration > 0) {
                     setTimeout(() => {
                         hideNotification(notification);

@@ -15,8 +15,7 @@ class SaveAqiData extends Command {
         $sensors = Sensor::all();
 
         foreach ($sensors as $sensor) {
-            // Fetch latest AQI from API or database
-            $latestAqi = $sensor->aqi;  // Modify if using an API
+            $latestAqi = $sensor->aqi;
 
             AqiHistories::create([
                 'sensor_id' => $sensor->id,
