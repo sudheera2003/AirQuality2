@@ -3,16 +3,16 @@ let isAQIUpdating = false;
 
 // Function to update AQI values
 function updateAQI() {
-    if (!isAQIUpdating) return; // Stop execution if AQI updating is turned off
+    if (!isAQIUpdating) return;
 
-    const sensorIds = window.sensorIds || []; // Ensure sensorIds is defined
+    const sensorIds = window.sensorIds || [];
     sensorIds.forEach(sensorId => {
         fetch(`/update-aqi/${sensorId}`)
             .then(response => response.json())
             .then(data => {
                 const aqiElement = document.getElementById('aqi-' + sensorId);
                 if (aqiElement) {
-                    aqiElement.textContent = data.aqi; // Update the AQI value in the HTML
+                    aqiElement.textContent = data.aqi;
                 }
             })
             .catch(error => console.error('Error fetching AQI data:', error));
@@ -23,7 +23,7 @@ function updateAQI() {
 window.startAQIUpdates = function () {
     if (!aqiInterval) {
         isAQIUpdating = true;
-        sessionStorage.setItem("aqiUpdating", "true"); // Save state in session
+        sessionStorage.setItem("aqiUpdating", "true");
         aqiInterval = setInterval(updateAQI, 2000);
     }
 };
@@ -31,7 +31,7 @@ window.startAQIUpdates = function () {
 // Function to stop AQI updates
 window.stopAQIUpdates = function () {
     isAQIUpdating = false;
-    sessionStorage.setItem("aqiUpdating", "false"); // Save state in session
+    sessionStorage.setItem("aqiUpdating", "false");
     clearInterval(aqiInterval);
     aqiInterval = null;
 };
@@ -42,6 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (savedState === "true") {
         startAQIUpdates();
     } else {
-        stopAQIUpdates(); // Ensure it's stopped if the user had disabled it
+        stopAQIUpdates();
     }
 });

@@ -82,7 +82,7 @@
                 color: #2196F3;
             }
 
-            /* Loading Spinner Styles */
+            /* Loading Spinner */
             .loading-spinner {
                 position: fixed;
                 z-index: 2000;
@@ -275,7 +275,6 @@
                     .then(response => {
                         // Show success modal
                         showModal("Success", response.success, "success");
-                        // Clear form on success
                         document.getElementById("contact-form").reset();
                     })
                     .catch(error => {
@@ -308,9 +307,7 @@
                 modal.style.display = "block";
             }
 
-            // Close the modal and reset form
             document.getElementById("modalOkBtn").addEventListener("click", function() {
-                // Hide the modal
                 document.getElementById("messageModal").style.display = "none";
 
                 document.getElementById("contact-form").reset();

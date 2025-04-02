@@ -47,7 +47,6 @@
                 margin-bottom: 15px;
             }
 
-            /* Add smooth transitions */
             #aqiChart {
                 transition: opacity 0.3s ease;
             }
@@ -140,14 +139,14 @@
                                 borderWidth: 2,
                                 borderColor: '#4CAF50',
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                tension: 0, // This makes the line straight between points
-                                fill: false, // No fill under the line
-                                pointRadius: 4, // Size of data points
-                                pointHoverRadius: 6, // Size when hovering
+                                tension: 0,
+                                fill: false,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
                                 pointBackgroundColor: '#4CAF50',
                                 pointBorderColor: '#ffffff',
                                 pointBorderWidth: 1,
-                                showLine: true // Ensures line is shown
+                                showLine: true
                             }]
                         },
                         options: {
@@ -155,9 +154,9 @@
                             maintainAspectRatio: false,
                             scales: {
                                 y: {
-                                    beginAtZero: false, // Don't force zero baseline
-                                    suggestedMin: 0, // But suggest starting at 0
-                                    suggestedMax: 300, // Suggest max at 300 unless data exceeds
+                                    beginAtZero: false,
+                                    suggestedMin: 0,
+                                    suggestedMax: 300,
                                     title: {
                                         display: true,
                                         text: 'AQI Value',
@@ -271,18 +270,15 @@
                             let values = [];
 
                             if (period === 'day') {
-                                // Create labels for all 24 hours, even if no data
                                 labels = Array.from({
                                     length: 24
                                 }, (_, i) => `${i}:00`);
                                 values = Array(24).fill(null);
 
-                                // Fill in actual data points
                                 data.forEach(item => {
                                     values[item.hour] = item.avg_aqi;
                                 });
                             } else if (period === 'week') {
-                                // Get last 7 days
                                 const days = [];
                                 for (let i = 6; i >= 0; i--) {
                                     const date = new Date();
@@ -297,7 +293,6 @@
                                 labels = days;
                                 values = Array(7).fill(null);
 
-                                // Fill in actual data points
                                 data.forEach(item => {
                                     const date = new Date(item.date);
                                     const today = new Date();
@@ -309,7 +304,6 @@
                                     }
                                 });
                             } else {
-                                // Month view - last 4 weeks
                                 labels = Array.from({
                                     length: 4
                                 }, (_, i) => `Week ${new Date().getWeek() - (3 - i)}`);
@@ -344,7 +338,6 @@
                         });
                 }
 
-                // Add getWeek method to Date prototype for month view
                 Date.prototype.getWeek = function() {
                     const date = new Date(this.getTime());
                     date.setHours(0, 0, 0, 0);
@@ -365,13 +358,11 @@
             //-------------------------------------------------------------------------------------------------------------------------------
 
             $(document).ready(function() {
-                let lastClickedDay = null; // Store the last clicked day to toggle it
+                let lastClickedDay = null;
 
-                // Toggle months visibility on sensor button click
                 $(".sensor-btn").click(function() {
                     let monthsContainer = $(this).next(".months");
                     monthsContainer.toggle();
-                    // Hide AQI data if the months are collapsed
                     $(".aqi-table").hide();
                 });
 
@@ -380,31 +371,25 @@
                     let month = $(this).data("month");
                     let daysContainer = $(this).next(".days");
 
-                    // Hide all other days before toggling the selected one
                     $(this).closest(".months").find(".days").not(daysContainer).hide();
 
-                    // If the selected days are already visible, collapse them
                     if (daysContainer.is(":visible")) {
                         daysContainer.hide();
-                        $(".aqi-table").hide(); // Hide AQI data when days are collapsed
+                        $(".aqi-table").hide();
                     } else {
-                        // Fetch days for the selected month
                         $.get(`/historical/days/${sensorId}/${month}`, function(data) {
                             let daysHtml = "";
 
                             if (data.days.length === 0) {
-                                // If there are no available days, display a message
                                 daysHtml =
                                     `<p class="error-message">There is no data for this month</p>`;
                             } else {
-                                // Otherwise, display the available days
                                 data.days.forEach(day => {
                                     daysHtml +=
                                         `<button class="day-btn" data-sensor="${sensorId}" data-month="${month}" data-day="${day}">${day}</button>`;
                                 });
                             }
 
-                            // Update the days container, show it, and hide AQI table
                             daysContainer.html(daysHtml).show();
                             $(".aqi-table").hide();
                         });
@@ -413,28 +398,22 @@
 
 
 
-                // When a specific day is clicked, display the AQI data
                 $(document).on("click", ".day-btn", function() {
                     let sensorId = $(this).data("sensor");
                     let month = $(this).data("month");
                     let day = $(this).data("day");
 
-                    // Check if this day was already clicked
                     if (lastClickedDay === `${sensorId}-${month}-${day}`) {
-                        // If the same day is clicked, hide the AQI data and collapse it
+
                         $(".aqi-table").hide();
-                        $(this).removeClass("active"); // Optionally remove the active class
-                        lastClickedDay = null; // Reset the last clicked day
+                        $(this).removeClass("active");
+                        lastClickedDay = null;
                     } else {
-                        // Show the AQI table and fetch data for the new day
-                        // Get the sensor name using the data-sensor-name attribute
                         let sensorName = $(`button[data-sensor="${sensorId}"]`).data("sensor-name");
 
-                        // Update the selected date display
                         $("#selected-date").text(`${sensorName} - ${month}/${day}`);
                         $(".aqi-table").show();
 
-                        // Fetch the AQI data for the selected sensor, month, and day
                         $.get(`/historical/data/${sensorId}/${month}/${day}`, function(data) {
                             let tableHtml = "";
                             data.aqi.forEach(record => {
@@ -444,9 +423,7 @@
                             $("#aqi-data").html(tableHtml);
                         });
 
-                        // Mark this day as the last clicked day
                         lastClickedDay = `${sensorId}-${month}-${day}`;
-                        // Optionally add an "active" class to indicate the selected day
                         $(".day-btn").removeClass("active");
                         $(this).addClass("active");
                     }

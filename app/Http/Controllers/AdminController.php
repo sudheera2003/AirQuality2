@@ -39,7 +39,6 @@ class AdminController extends Controller
 
     public function destroy($id)
 {
-    // Check authentication
     if (!Auth::check()) {
         return response()->json([
             'success' => false,
@@ -47,7 +46,6 @@ class AdminController extends Controller
         ], 401);
     }
 
-    // Prevent self-deletion
     if ($id == Auth::id()) {
         return response()->json([
             'success' => false,
@@ -55,7 +53,6 @@ class AdminController extends Controller
         ], 403);
     }
 
-    // Find the user
     $user = User::find($id);
 
     if (!$user) {

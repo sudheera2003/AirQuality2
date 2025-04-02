@@ -61,34 +61,29 @@
                 // Format time as HH:MM (24-hour format)
                 let hours = now.getHours();
                 let minutes = now.getMinutes();
-                minutes = minutes < 10 ? "0" + minutes : minutes; // Add leading zero if needed
+                minutes = minutes < 10 ? "0" + minutes : minutes;
                 
-                // Format date as 'Mar 14'
                 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 let formattedDate = monthNames[now.getMonth()] + " " + now.getDate();
 
-                // Combine into final format
                 let formattedTime = `${hours}:${minutes}, ${formattedDate}`;
 
-                // Update the text content immediately
                 document.querySelector('.txt-2').innerHTML = `Air quality index (AQI) in Colombo ${formattedTime}`;
             }
 
-            // Initial call to set timestamp immediately
             updateTimestamp();
 
-            // Update timestamp every minute (to ensure accuracy)
             setInterval(updateTimestamp, 60000);
 
 
         </script>
 
         <script>
-            window.sensorIds = @json($sensors->pluck('id')); // Passing sensor IDs from Blade to JavaScript
-            let currentMarker = null; // To keep track of the current marker
-            let currentInfoWindow = null; // To keep track of the current info window
-            let activeSensorId = null; // To track the active sensor's ID (the one clicked by the user)
-            let aqiUpdateInterval = null; // Variable to hold the interval ID
+            window.sensorIds = @json($sensors->pluck('id'));
+            let currentMarker = null;
+            let currentInfoWindow = null;
+            let activeSensorId = null;
+            let aqiUpdateInterval = null;
 
             // Function to fetch the latest AQI data from the server
             function updateAQIFromServer(sensorId) {
@@ -96,13 +91,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data && data.aqi) {
-                            // Update AQI gauge with new value
                             initializeAQIGauge(data.aqi);
 
-                            // Update the AQI value displayed in the info window
                             document.getElementById('aqi-' + sensorId).textContent = data.aqi;
-
-                            // Dynamically update the AQI status (Good, Moderate, etc.) based on the AQI value
                             const aqiCategory = getAqiCategory(data.aqi);
                             document.getElementById('aqi-status-' + sensorId).textContent = aqiCategory.category;
                             document.getElementById('aqi-status-' + sensorId).style.color = aqiCategory.color;
@@ -228,8 +219,7 @@
                     center: colombo
                 });
 
-                // Loop through sensors and add markers for those with status_id = 1
-                const sensors = @json($sensors); // Ensure that sensors include the status_id field
+                const sensors = @json($sensors);
                 sensors.filter(location => location.status_id === 1).forEach(location => {
                     const aqiCategory = getAqiCategory(location.aqi);
 
@@ -246,45 +236,34 @@
                         content: `<div style="font-size: 18px; font-weight: bold;" id="sensor-name-${location.id}">${location.name}</div>
                       <br>AQI: <span id="aqi-${location.id}">${location.aqi}</span><br>
                       Status: <span id="aqi-status-${location.id}" style="color: ${aqiCategory.color}; font-weight: bold;">${aqiCategory.category}</span>
-                    <div id="aqi-chart-${location.id}" style="width: 300px; height: 150px;"></div>` // Chart container
+                    <div id="aqi-chart-${location.id}" style="width: 300px; height: 150px;"></div>`
                     });
 
-                    // Click event to open info window and update AQI gauge
                     marker.addListener('click', () => {
-                        // If an InfoWindow is already open, close it
                         if (currentInfoWindow) {
                             currentInfoWindow.close();
                         }
 
-                        // Open the clicked marker's InfoWindow
                         infowindow.open(map, marker);
 
-                        // Update the current InfoWindow
                         currentInfoWindow = infowindow;
 
-                        // Set this marker as the active one
                         currentMarker = marker;
 
-                        // Set the active sensor ID
                         activeSensorId = location.id;
 
-                        // Update the selected sensor name in the DOM
                         document.getElementById('sensor-name').textContent = location
-                            .name; // Update the sensor name here
+                            .name;
 
-                        // Initialize AQI gauge with the current sensor's AQI value
                         initializeAQIGauge(location.aqi);
 
-                        // Fetch historical AQI data for the last 24 hours
                         fetch(`/sensor/${location.id}/historical-aqi`)
                             .then(response => response.json())
                             .then(data => {
-                                // Extract the last 24 hours' AQI values and recorded times
                                 const aqiValues = data.map(item => item.aqi_value);
                                 const times = data.map(item => new Date(item.recorded_at)
                                     .toLocaleTimeString());
 
-                                // Create a small chart for the historical AQI data inside the InfoWindow
                                 JSC.chart(`aqi-chart-${location.id}`, {
                                     type: 'line',
                                     title_label_text: '24-Hour AQI Trend',
@@ -318,39 +297,31 @@
 
                 });
 
-                // Click event on the map to reset the marker and AQI
                 google.maps.event.addListener(map, 'click', () => {
                     // Close any open InfoWindow
                     if (currentInfoWindow) {
                         currentInfoWindow.close();
                     }
 
-                    // Reset AQI gauge to 0 when clicking on the map
                     initializeAQIGauge(0);
 
-                    // Reset the sensor name to default
                     document.getElementById('sensor-name').textContent = ' Select a location';
 
-                    // Clear the active sensor ID
                     activeSensorId = null;
 
-                    // Clear the existing interval
                     if (aqiUpdateInterval) {
                         clearInterval(aqiUpdateInterval);
-                        aqiUpdateInterval = null; // Reset interval ID
+                        aqiUpdateInterval = null;
                     }
                 });
 
-                // Initialize meter with 0 on first load
                 initializeAQIGauge(0);
             }
 
 
             // Event listener for clicks anywhere on the page
             document.body.addEventListener('click', (event) => {
-                // If the click is outside the map and marker
                 if (!event.target.closest('#map') && currentMarker) {
-                    // Reset the map and gauge
                     if (currentInfoWindow) {
                         currentInfoWindow.close();
                     }

@@ -40,7 +40,7 @@ class SensorController extends Controller
             'name' => 'required|string|max:255',
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
-            'status_id' => 'required|exists:sensor_statuses,id', // Validate that the status_id exists in the table
+            'status_id' => 'required|exists:sensor_statuses,id',
         ]);
 
         // Check if the location with the same latitude and longitude already exists
@@ -49,7 +49,6 @@ class SensorController extends Controller
             ->first();
 
         if ($existingSensor) {
-            // If a sensor exists with the same lat/lng, return back with an error message
             return redirect()->back()->with('error', 'A sensor already exists at this location.')->withInput();
         }
 
@@ -58,12 +57,11 @@ class SensorController extends Controller
         $sensor->name = $request->name;
         $sensor->lat = $request->lat;
         $sensor->lng = $request->lng;
-        $sensor->aqi = 0; // Initial AQI value
-        $sensor->status_id = $request->status_id; // Store the selected status_id
+        $sensor->aqi = 0;
+        $sensor->status_id = $request->status_id;
 
         $sensor->save();
 
-        // Redirect back to the dashboard with a success message
         return redirect()->route('dashboard')->with('success', 'Sensor added successfully!');
     }
 
@@ -84,11 +82,9 @@ class SensorController extends Controller
         $sensor = Sensor::find($request->id);
 
         if (!$sensor) {
-            // If sensor does not exist, return error message
             return redirect()->back()->with('error', 'Sensor not found!');
         }
 
-        // Delete related records in the `aqi_histories` table
         $sensor->aqiHistories()->delete();
 
         // Delete the sensor

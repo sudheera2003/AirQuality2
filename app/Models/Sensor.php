@@ -14,7 +14,6 @@ class Sensor extends Model
     protected $fillable = [
         'name', 'lat', 'lng', 'aqi', 'status_id'
     ];
-    // Define the relationship with the sensor_statuses table
     public function status()
     {
         return $this->belongsTo(SensorStatus::class, 'status_id');

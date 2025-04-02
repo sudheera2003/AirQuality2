@@ -14,7 +14,7 @@ return new class extends Migration
         // Create the sensor_statuses table
         Schema::create('sensor_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status');  // Store the status (e.g., 'Active', 'Inactive')
+            $table->string('status');
             $table->timestamps();
         });
     }
