@@ -287,9 +287,10 @@ h3 {
     text-align: center;
 }
 
-.admin-table th, .admin-table td {
+.admin-table th, .admin-table td{
     border: 1px solid #ddd;
     padding: 12px;
+    display: table-cell;
 }
 
 .admin-table thead {
@@ -335,7 +336,7 @@ h3 {
 }
 
 td[contenteditable="true"] {
-    border: 1px solid transparent;
+
     outline: none;
     transition: border 0.3s ease;
 }

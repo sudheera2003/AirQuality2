@@ -371,7 +371,7 @@
                                 <tr data-id="{{ $admin->id }}">
                                     <td>{{ $admin->id }}</td>
                                     <td contenteditable="true" class="editable name">{{ $admin->name }}</td>
-                                    <td contenteditable="true" class="editable email">{{ $admin->email }}</td>
+                                    <td contenteditable="true"  class="editable email">{{ $admin->email }}</td>
                                     <td style="width: 400px;">
                                         <button class="save-btn">Save</button>
                                         <form method="POST" action="{{ route('admin.destroy', $admin->id) }}"
