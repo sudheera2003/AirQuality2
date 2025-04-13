@@ -24,7 +24,7 @@ window.startAQIUpdates = function () {
     if (!aqiInterval) {
         isAQIUpdating = true;
         sessionStorage.setItem("aqiUpdating", "true");
-        aqiInterval = setInterval(updateAQI, 2000);
+        aqiInterval = setInterval(updateAQI, 600000);
     }
 };
 

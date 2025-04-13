@@ -437,7 +437,7 @@
                     .catch(error => console.error('Error fetching AQI data:', error));
             }
 
-            setInterval(fetchAQI, 2000);
+            setInterval(fetchAQI, 600000);
 
             fetchAQI();
 

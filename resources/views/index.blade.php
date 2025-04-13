@@ -73,7 +73,7 @@
 
             updateTimestamp();
 
-            setInterval(updateTimestamp, 60000);
+            setInterval(updateTimestamp, 600000);
 
 
         </script>
@@ -291,7 +291,7 @@
                             }
                             aqiUpdateInterval = setInterval(() => {
                                 updateAQIFromServer(location.id);
-                            }, 2000);
+                            }, 600000);
                         }
                     });
 
